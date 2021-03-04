@@ -14,11 +14,11 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen name="Login" component={Login} options={{ title: 'Login' }} />
+        <Stack.Screen name="Menu" component={Menu} options={{ title: 'Menu' }} />
         <Stack.Screen name="Product" component={Product} />
         <Stack.Screen name="ShoppingCart" component={ShoppingCart} options={{ title: 'Cart' }}/>
         <Stack.Screen name="WishList" component={WishList} options={{ title: 'Wish List' }}/>
-        <Stack.Screen name="Menu" component={Menu} options={{ title: 'Menu' }} />
-        <Stack.Screen name="Login" component={Login} options={{ title: 'Login' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
