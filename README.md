@@ -1,1 +1,1 @@
-# ecommerce-app
+# Sample ecommerce-app
