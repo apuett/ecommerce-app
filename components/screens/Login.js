@@ -1,26 +1,55 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Login</Text>
+const testUser = {username:"admin", password:"admin"}
+
+export default class LoginScreen extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {username:'', password:''}
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.header}>Login</Text>
+      
         <TextInput
           style={styles.input}
           placeholder="Username"
+          onChangeText={(username)=>this.setState({username})}
+          value={this.state.username}
         />
         <TextInput
           style={styles.input}
           placeholder="Password"
+          onChangeText={(password)=>this.setState({password})}
+          value={this.state.password}
+          secureTextEntry={true}
         />
-      <View>
-        <TouchableOpacity style={styles.button}>
+        
+        <TouchableOpacity
+          style={styles.button} 
+          onPress={this._signin}
+        >
           <Text>Login</Text>
         </TouchableOpacity>
       </View>
-    </View>
-  );
+    );
+  }
+  _signin = async () => {
+    if(this.state.username===testUser.username && this.state.password===testUser.password) {
+      await AsyncStorage.setItem('logged', true);
+      this.props.navigation.navigate('App');
+    } else {
+      alert("Incorrect username or password!")
+    }
+  }
+
 }
 
 const styles = StyleSheet.create({
