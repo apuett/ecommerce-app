@@ -7,6 +7,7 @@ function Menu({navigation}) {
             <Button title="Product" onPress={() =>navigation.push('Product')}/>
             <Button title="Shopping Cart" onPress={() =>navigation.push('ShoppingCart')}/>
             <Button title="Wish List" onPress={() =>navigation.push('WishList')}/>
+            <Button title="Login" onPress={() => navigation.push('Login')}/>
         </View>
     )
 }
