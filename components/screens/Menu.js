@@ -5,6 +5,7 @@ function Menu({navigation}) {
     return (
         <View style={styles.menu_container}>
             <Button title="Product" onPress={() =>navigation.push('Product')}/>
+            <Button title="Login" onPress={() => navigation.push('Login')}/>
             <Button title="Shopping Cart" onPress={() =>navigation.push('ShoppingCart')}/>
             <Button title="Wish List" onPress={() =>navigation.push('WishList')}/>
         </View>
