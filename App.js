@@ -10,12 +10,18 @@
 // import { createStackNavigator } from '@react-navigation/stack';
 
 // export default function App() {
+
+//   const [productContext] = useState(ProductContext);
+
 //   return (
 //     <NavigationContainer>
 //       <Stack.Navigator>
 //         <Stack.Screen name="Login" component={Login} options={{ title: 'Login' }} />
 //         <Stack.Screen name="Menu" component={Menu} options={{ title: 'Menu', header: null }} />
-//         <Stack.Screen name="Product" component={Product} />
+//         <Stack.Screen name="Product" component={Product} initialParams={{'props': productContext}} />
+          // <Stack.Screen name="Product">
+          //           {(props) => <Product productContext={productContext}/>}
+          //         </Stack.Screen>
 //         <Stack.Screen name="ShoppingCart" component={ShoppingCart} options={{ title: 'Cart' }}/>
 //         <Stack.Screen name="WishList" component={WishList} options={{ title: 'Wish List' }}/>
 //       </Stack.Navigator>
@@ -40,58 +46,63 @@
 
 
 
-import React from 'react';
+import React,{ useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
-import Login from '../e-commerce-app/components/screens/Login';
-import Menu from '../e-commerce-app/components/screens/Menu';
-import Product from '../e-commerce-app/components/screens/Product';
-import ShoppingCart from '../e-commerce-app/components/screens/ShoppingCart';
-import WishList from '../e-commerce-app/components/screens/WishList';
+import Login from './components/screens/Login';
+import Menu from './components/screens/Menu';
+import Product from './components/screens/Product';
+import ShoppingCart from './components/screens/ShoppingCart';
+import WishList from './components/screens/WishList';
+import ProductContext from './components/ProductContext.json';
 
-export default class App extends React.Component {
-  render() {
-    return <AppContainer />;
-  }
+export default function App() {
+
+  const [productContext] = useState(ProductContext);
+
+  return <AppContainer screenProps={productContext} />;
 }
 
-const AppNavigator = createStackNavigator({
-  Login: {
-    screen: Login,
-    navigationOptions: {
-      header: null,
+  const AppNavigator = createStackNavigator({
+    Login: {
+      screen: Login,
+      navigationOptions: {
+        header: null,
+      },
     },
-  },
-  Menu: {
-    screen: Menu,
-    navigationOptions: {
-      title:"Menu",
+    Menu: {
+      screen: Menu,
+      navigationOptions: {
+        title:"Menu",
+      },
     },
-  },
-  Product: {
-    screen: Product,
-    navigationOptions: {
-      title:"Product"
+    Product: {
+      // screen: Product,
+      screen: productContext => <Product {...productContext} props = {productContext} />,
+      navigationOptions: {
+        title:"Product"
+      },
+    }, 
+    ShoppingCart: {
+      screen: ShoppingCart,
+      navigationOptions: {
+        title:"Cart"
+      },
     },
-  }, 
-  ShoppingCart: {
-    screen: ShoppingCart,
-    navigationOptions: {
-      title:"Cart"
-    },
-  },
-  WishList: {
-    screen: WishList,
-    navigationOptions: {
-      title:"Wish List"
-    },
-  }
-},{
-    initialRouteName: "Login"
-});
+    WishList: {
+      screen: WishList,
+      navigationOptions: {
+        title:"Wish List"
+      },
+    }
+  },{
+      initialRouteName: "Login"
+  });
 
-const AppContainer = createAppContainer(AppNavigator);
+  const AppContainer = createAppContainer(AppNavigator);
+
+
 
 const styles = StyleSheet.create({
   container: {
