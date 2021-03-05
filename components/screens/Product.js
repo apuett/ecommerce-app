@@ -1,38 +1,48 @@
 import React from 'react'
-import NavBar from '../NavBar';
-import {Button, ScrollView, StyleSheet, Text, View } from 'react-native';
-import MenuButton from '../MenuButton';
+import { View, StyleSheet, Text, Image } from 'react-native';
+import { Card } from 'react-native-elements'
 
-function Product({navigation}) {
-
-
-    return (
-        <View style={styles.container}>
-            {/* <MenuButton navigation={navigation}/> */}
-            <ScrollView>
-                <View style={styles.product_container}>
-                    <Text>Product</Text>
+export default function Product(props) {
+    return(
+        <Card> 
+            <View style={styles.container}>
+            <Image style={styles.image} source={props.image} />
+                <View style={styles.textContainer}>
+                    <Text style={styles.name}>{props.name}</Text>
+                    <Text style={styles.price}>{props.price}</Text>
+                    <Text style={styles.description}>{props.description}</Text>
                 </View>
-            </ScrollView>
-            <NavBar navigation={navigation}></NavBar>
-        </View>
-    )
+            </View>
+        </Card>
+    );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        width: '100%',
+        height : 200,
+        marginBottom : 15,
+        backgroundColor : '#FFFFFF',
     },
-    product_container: {
-      flex: 1,  
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
+    image: {
+        alignSelf: 'center',
+        width: '50%',
+        height: '60%'
     },
+    textContainer : {
+        flex : 1,
+        alignItems : 'center',
+        justifyContent : 'center'
+    },
+    name: {
+        marginBottom: 5, 
+        marginTop: 5
+    },
+    price: {
+        fontWeight: 'bold',
+        marginBottom: 10
+    },
+    description: {
+        fontSize: 10,
+    }
   });
-
-export default Product
-
-
-
-

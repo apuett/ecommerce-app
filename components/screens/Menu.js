@@ -1,24 +1,57 @@
-import React from 'react'
-import { Button, StyleSheet, Text, View } from 'react-native';
+import React, {useState} from 'react'
+import { StyleSheet, View, FlatList, Text } from 'react-native';
+import Product from '../screens/Product';
+import { ScrollView } from 'react-native-gesture-handler';
 
-function Menu({navigation}) {
-    return (
-        <View style={styles.menu_container}>
-            <Button title="Product" onPress={() =>navigation.push('Product')}/>
-            <Button title="Login" onPress={() => navigation.push('Login')}/>
-            <Button title="Shopping Cart" onPress={() =>navigation.push('ShoppingCart')}/>
-            <Button title="Wish List" onPress={() =>navigation.push('WishList')}/>
+export default function Menu({navigation}) {
+  const [products] = useState([
+    {
+      name: 'Laptop',
+      price: 699.99,
+      description: 'Great condition!',
+      image: require('../images/laptop.png')
+    },
+    {
+      name: 'Charger',
+      price: 9.99,
+      description: 'Okay condition',
+      image: require('../images/charger.png')
+    }
+  ]);
+
+  return (
+    <ScrollView
+      style={{
+        flexGrow: 0,
+        width: "100%",
+        height: "100%",
+      }}>
+        <View style={styles.row}>
+            <View style={styles.col}>
+              <FlatList
+                data={products}
+                renderItem={({ item }) => (
+                  <Product 
+                  name={item.name} 
+                  price={item.price}
+                  description={item.description}
+                  image={item.image}
+                  />
+                )}
+              />
+            </View>
         </View>
-    )
+    </ScrollView>
+  );
 }
 
 const styles = StyleSheet.create({
-    menu_container: {
-      flex: 1,  
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
+    row: {
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'center'
     },
+    col: {
+      flex: 1
+    }
   });
-
-export default Menu
