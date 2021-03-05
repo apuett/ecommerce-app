@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import { StyleSheet, View, FlatList, Text } from 'react-native';
 import Product from '../screens/Product';
+import NavBar from '../NavBar';
 import { ScrollView } from 'react-native-gesture-handler';
 
 export default function Menu({navigation}) {
@@ -20,32 +21,32 @@ export default function Menu({navigation}) {
   ]);
 
   return (
-    <ScrollView
-      style={{
-        flexGrow: 0,
-        width: "100%",
-        height: "100%",
-      }}>
-        <View style={styles.row}>
-            <View style={styles.col}>
-              <FlatList
-                data={products}
-                renderItem={({ item }) => (
-                  <Product 
-                  name={item.name} 
-                  price={item.price}
-                  description={item.description}
-                  image={item.image}
-                  />
-                )}
-              />
-            </View>
-        </View>
-    </ScrollView>
+    <View style={styles.container}>
+          <View style={styles.row}>
+              <View style={styles.col}>
+                <FlatList
+                  data={products}
+                  renderItem={({ item }) => (
+                    <Product 
+                    name={item.name} 
+                    price={item.price}
+                    description={item.description}
+                    image={item.image}
+                    />
+                  )}
+                  keyExtractor={(item, index) => index.toString()}
+                />
+              </View>
+          </View>
+      <NavBar navigation={navigation}></NavBar>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+    container: {
+      flex: 1
+    },
     row: {
       flex: 1,
       flexDirection: 'row',
