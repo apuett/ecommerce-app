@@ -44,11 +44,11 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
-import Login from '../e-commerce-app/components/screens/Login';
-import Menu from '../e-commerce-app/components/screens/Menu';
-import Product from '../e-commerce-app/components/screens/Product';
-import ShoppingCart from '../e-commerce-app/components/screens/ShoppingCart';
-import WishList from '../e-commerce-app/components/screens/WishList';
+import Login from './components/screens/Login';
+import Menu from './components/screens/Menu';
+import Product from './components/screens/Product';
+import ShoppingCart from './components/screens/ShoppingCart';
+import WishList from './components/screens/WishList';
 
 export default class App extends React.Component {
   render() {
