@@ -14,7 +14,7 @@
 //     <NavigationContainer>
 //       <Stack.Navigator>
 //         <Stack.Screen name="Login" component={Login} options={{ title: 'Login' }} />
-//         <Stack.Screen name="Menu" component={Menu} options={{ title: 'Menu' }} />
+//         <Stack.Screen name="Menu" component={Menu} options={{ title: 'Menu', header: null }} />
 //         <Stack.Screen name="Product" component={Product} />
 //         <Stack.Screen name="ShoppingCart" component={ShoppingCart} options={{ title: 'Cart' }}/>
 //         <Stack.Screen name="WishList" component={WishList} options={{ title: 'Wish List' }}/>
@@ -34,15 +34,21 @@
 //   },
 // });
 
+
+
+
+
+
+
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
-import Login from '../ecommerce-app/components/screens/Login';
-import Menu from '../ecommerce-app/components/screens/Menu';
-import Product from '../ecommerce-app/components/screens/Product';
-import ShoppingCart from '../ecommerce-app/components/screens/ShoppingCart';
-import WishList from '../ecommerce-app/components/screens/WishList';
+import Login from '../e-commerce-app/components/screens/Login';
+import Menu from '../e-commerce-app/components/screens/Menu';
+import Product from '../e-commerce-app/components/screens/Product';
+import ShoppingCart from '../e-commerce-app/components/screens/ShoppingCart';
+import WishList from '../e-commerce-app/components/screens/WishList';
 
 export default class App extends React.Component {
   render() {
@@ -52,19 +58,34 @@ export default class App extends React.Component {
 
 const AppNavigator = createStackNavigator({
   Login: {
-    screen: Login
+    screen: Login,
+    navigationOptions: {
+      header: null,
+    },
   },
   Menu: {
-    screen: Menu
+    screen: Menu,
+    navigationOptions: {
+      title:"Menu",
+    },
   },
   Product: {
-    screen: Product
+    screen: Product,
+    navigationOptions: {
+      title:"Product"
+    },
   }, 
   ShoppingCart: {
-    screen: ShoppingCart
+    screen: ShoppingCart,
+    navigationOptions: {
+      title:"Cart"
+    },
   },
   WishList: {
-    screen: WishList
+    screen: WishList,
+    navigationOptions: {
+      title:"Wish List"
+    },
   }
 },{
     initialRouteName: "Login"
