@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
+import React, {useState} from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import Login from './components/screens/Login';
@@ -8,11 +8,19 @@ import Product from './components/screens/Product';
 import ProductDetails from './components/screens/ProductDetails';
 import ShoppingCart from './components/screens/ShoppingCart';
 import WishList from './components/screens/WishList';
+import {products} from './components/ProductContext';
 
-export default class App extends React.Component {
-  render() {
-    return <AppContainer />;
-  }
+// export default class App extends React.Component {
+//   render() {
+//     return <AppContainer />;
+//   }
+// }
+
+export default function App() {
+
+  const [productContext] = useState(products);
+
+  return <AppContainer screenProps={{ products: productContext }}/>;
 }
 
 const AppNavigator = createStackNavigator({

@@ -4,28 +4,14 @@ import Product from '../screens/Product';
 import NavBar from '../NavBar';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function Menu({navigation}) {
-  const [products] = useState([
-    {
-      name: 'Laptop',
-      price: 699.99,
-      description: 'Great condition!',
-      image: require('../images/laptop.png')
-    },
-    {
-      name: 'Charger',
-      price: 9.99,
-      description: 'Okay condition',
-      image: require('../images/charger.png')
-    }
-  ]);
+export default function Menu({ screenProps, navigation }) {
 
   return (
     <View style={styles.container}>
           <View style={styles.row}>
               <View style={styles.col}>
                 <FlatList
-                  data={products}
+                  data={screenProps.products}
                   renderItem={({ item }) => (
                     <TouchableOpacity onPress={() => navigation.navigate('ProductDetails', item)}>
                       <Product 
