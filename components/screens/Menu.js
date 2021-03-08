@@ -11,7 +11,7 @@ export default function Menu({ screenProps, navigation }) {
           <View style={styles.row}>
               <View style={styles.col}>
                 <FlatList
-                  data={screenProps}
+                  data={screenProps.products}
                   renderItem={({ item }) => (
                     <Product 
                     name={item.name} 

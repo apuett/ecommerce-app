@@ -49,7 +49,7 @@ import Menu from './components/screens/Menu';
 import Product from './components/screens/Product';
 import ShoppingCart from './components/screens/ShoppingCart';
 import WishList from './components/screens/WishList';
-import ProductContext from './components/ProductContext';
+import {products} from './components/ProductContext';
 
 // export default class App extends React.Component {
 //   render() {
@@ -58,24 +58,10 @@ import ProductContext from './components/ProductContext';
 // }
 
 export default function App() {
-  const [products] = useState([
-    {
-      name: 'Laptop',
-      price: 699.99,
-      description: 'Great condition!',
-      image: require('./components/images/laptop.png')
-    },
-    {
-      name: 'Charger',
-      price: 9.99,
-      description: 'Okay condition',
-      image: require('./components/images/charger.png')
-    }
-  ]);
 
-  const [productContext] = useState(ProductContext);
+  const [productContext] = useState(products);
 
-  return <AppContainer screenProps={products}/>;
+  return <AppContainer screenProps={{ products: productContext }}/>;
 }
 
 const AppNavigator = createStackNavigator({

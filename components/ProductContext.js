@@ -1,4 +1,4 @@
-export const ProductContext =  [
+export const products = [
       {
         name: 'Laptop',
         price: 699.99,
@@ -11,4 +11,8 @@ export const ProductContext =  [
         description: 'Okay condition',
         image: require('./images/charger.png')
       }
-    ]
+    ];
+
+export default {
+    products,
+}
