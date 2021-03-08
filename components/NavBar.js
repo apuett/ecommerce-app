@@ -6,7 +6,7 @@ import { AntDesign } from '@expo/vector-icons/';
 function NavBar({navigation}) {
     return (
         <View style={styles.navbar_container}>
-            <TouchableOpacity style={styles.nav_button} onPress={() =>navigation.push('Product')}>
+            <TouchableOpacity style={styles.nav_button} onPress={() =>navigation.push('Menu')}>
                 <AntDesign name="tag" size={30} color="#000000"/>
                 <Text>Shop</Text>
             </TouchableOpacity>
@@ -18,9 +18,9 @@ function NavBar({navigation}) {
                 <AntDesign name="bars" size={30} color="#000000"/>
                 <Text>Wish List</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.nav_button} onPress={() => navigation.push('Menu')}>
-                <AntDesign name="menufold" size={27} color="#000000"/>
-                <Text>Menu</Text>
+            <TouchableOpacity style={styles.nav_button} onPress={() => navigation.push('Login')}>
+                <AntDesign name="user" size={27} color="#000000"/>
+                <Text>Log Out</Text>
             </TouchableOpacity>
         </View>
     )
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     navbar_container: {
       flexDirection: 'row',  
       backgroundColor: '#CCC',
-      height: 100,
+      height: 80,
       alignItems: 'center',
       justifyContent: 'space-between',
       paddingLeft: 50,
