@@ -6,10 +6,11 @@ export default function Product(props) {
     return(
         <Card> 
             <View style={styles.container}>
-            {/* <Image style={styles.image} source={props.image} /> */}
+            <Image style={styles.image} source={props.image} />
                 <View style={styles.textContainer}>
-                    <Text style={styles.name}>{props.Product1.Name}</Text>
-                    <Text style={styles.price}>{props.Product1.Price}</Text>
+                    <Text style={styles.name}>{props.name}</Text>
+                    <Text style={styles.price}>{props.price}</Text>
+                    <Text style={styles.description}>{props.description}</Text>
                 </View>
             </View>
         </Card>

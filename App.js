@@ -59,7 +59,7 @@ import ProductContext from './components/ProductContext.json';
 
 export default function App() {
 
-  const [productContext] = useState(ProductContext);
+  const [productContext] = useState("ProductContext");
 
   return <AppContainer screenProps={productContext} />;
 }
@@ -79,7 +79,7 @@ export default function App() {
     },
     Product: {
       // screen: Product,
-      screen: productContext => <Product {...productContext} props = {productContext} />,
+      screen: productContext => <Product {...productContext} productContext = {productContext} />,
       navigationOptions: {
         title:"Product"
       },
