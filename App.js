@@ -66,7 +66,7 @@ const AppNavigator = createStackNavigator({
   Menu: {
     screen: Menu,
     navigationOptions: {
-      title:"Menu",
+      title:"Shop",
     },
   },
   Product: {
