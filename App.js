@@ -20,13 +20,13 @@ export default function App() {
 
   const [productContext] = useState(products);
   const [wishList, setWishList] = useState("Button not pressed");
-  const wishListButtonPress = (info) => {
+  const wishListButtonPress = (item) => {
     alert("Added to wish list");
-    setWishList(info);
+    setWishList(item);
   };
-  const wishListRemovePress = (info) => {
+  const wishListRemovePress = (item) => {
     alert("Item Removed");
-    setWishList(info);
+    setWishList(item);
   }
 
   return <AppContainer screenProps={{ products: productContext,
@@ -34,6 +34,13 @@ export default function App() {
                                       wishListButtonPushed: wishListButtonPress,
                                       removeWishListItem: wishListRemovePress }}/>;
 }
+
+
+
+//-----------------------------------------------------------------------
+//Need to avoid going back to log in screen. remember to implement a auth nav.
+//------------------------------------------------------------------------
+
 
 const AppNavigator = createStackNavigator({
   Login: {
