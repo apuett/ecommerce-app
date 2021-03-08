@@ -78,8 +78,7 @@ export default function App() {
       },
     },
     Product: {
-      // screen: Product,
-      screen: productContext => <Product {...productContext} productContext = {productContext} />,
+      screen: Product,
       navigationOptions: {
         title:"Product"
       },
