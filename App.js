@@ -19,8 +19,20 @@ import {products} from './components/ProductContext';
 export default function App() {
 
   const [productContext] = useState(products);
+  const [wishList, setWishList] = useState("Button not pressed");
+  const wishListButtonPress = (info) => {
+    alert("Added to wish list");
+    setWishList(info);
+  };
+  const wishListRemovePress = (info) => {
+    alert("Item Removed");
+    setWishList(info);
+  }
 
-  return <AppContainer screenProps={{ products: productContext }}/>;
+  return <AppContainer screenProps={{ products: productContext,
+                                      wishList: wishList,
+                                      wishListButtonPushed: wishListButtonPress,
+                                      removeWishListItem: wishListRemovePress }}/>;
 }
 
 const AppNavigator = createStackNavigator({
@@ -65,6 +77,7 @@ const AppNavigator = createStackNavigator({
 });
 
 const AppContainer = createAppContainer(AppNavigator);
+
 
 const styles = StyleSheet.create({
   container: {

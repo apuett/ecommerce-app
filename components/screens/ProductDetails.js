@@ -4,7 +4,12 @@ import { Card } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import NavBar from '../NavBar';
 
-export default function ProductDetails({ navigation }) {
+export default function ProductDetails({ screenProps, navigation }) {
+
+    const handleWishListPress = ()=>{
+        screenProps.wishListButtonPushed(navigation.getParam('name'));
+    };
+
     return(
         <View style={styles.container}>
             <Card> 
@@ -21,7 +26,7 @@ export default function ProductDetails({ navigation }) {
                                 <Text style={styles.buttonText}>Add to Cart</Text>
                             </TouchableOpacity>
 
-                            <TouchableOpacity style={styles.button} onPress={() => alert("Added to wish list")}>
+                            <TouchableOpacity style={styles.button} onPress={handleWishListPress}>
                                 <Text style={styles.buttonText}>Add to Wish List</Text>
                             </TouchableOpacity>
                         </View>
