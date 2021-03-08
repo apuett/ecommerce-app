@@ -10,7 +10,6 @@ export default function Product(props) {
                 <View style={styles.textContainer}>
                     <Text style={styles.name}>{props.name}</Text>
                     <Text style={styles.price}>{props.price}</Text>
-                    <Text style={styles.description}>{props.description}</Text>
                 </View>
             </View>
         </Card>
@@ -20,14 +19,14 @@ export default function Product(props) {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        height : 200,
+        height : 250,
         marginBottom : 15,
         backgroundColor : '#FFFFFF',
     },
     image: {
         alignSelf: 'center',
-        width: '50%',
-        height: '60%'
+        width: '60%',
+        height: '70%'
     },
     textContainer : {
         flex : 1,
@@ -35,11 +34,13 @@ const styles = StyleSheet.create({
         justifyContent : 'center'
     },
     name: {
-        marginBottom: 5, 
+        fontSize: 25,
+        marginBottom: 15, 
         marginTop: 5
     },
     price: {
         fontWeight: 'bold',
+        fontSize: 20,
         marginBottom: 10
     },
     description: {

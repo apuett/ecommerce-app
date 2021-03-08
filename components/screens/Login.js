@@ -1,11 +1,9 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ImageBackground, Image, Dimensions } from 'react-native';
 import bgImage from '../images/loginbackground.jpg';
 import logo from '../images/reactlogo.png';
-
-const testUser = {username:"admin", password:"admin"}
-const { width: WIDTH } = Dimensions.get('window')
+const testUser = {username:"admin", password:"admin"};
+const { width: WIDTH } = Dimensions.get('window');
 
 export default class LoginScreen extends React.Component {
 
