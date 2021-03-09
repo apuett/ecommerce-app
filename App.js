@@ -19,20 +19,21 @@ import {products} from './components/ProductContext';
 export default function App() {
 
   const [productContext] = useState(products);
-  const [wishList, setWishList] = useState("Button not pressed");
-  const wishListButtonPress = (item) => {
-    alert("Added to wish list");
-    setWishList(item);
+
+  const [wishList, setWishList] = useState([]);
+  const wishListButtonPress = (updatedList) => {
+    setWishList(updatedList);
   };
-  const wishListRemovePress = (item) => {
-    alert("Item Removed");
-    setWishList(item);
-  }
+
+  const [shoppingCart, setShoppingCart] = useState([]);
+  const shoppingCartButtonPress = (updatedCart) =>{
+    setShoppingCart(updatedCart);
+  };
 
   return <AppContainer screenProps={{ products: productContext,
                                       wishList: wishList,
                                       wishListButtonPushed: wishListButtonPress,
-                                      removeWishListItem: wishListRemovePress }}/>;
+                                      shoppingCartButtonPress: shoppingCartButtonPress }}/>;
 }
 
 

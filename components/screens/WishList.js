@@ -6,7 +6,9 @@ import NavBar from '../NavBar';
 function WishList({ screenProps,navigation }) {
 
     const removeWishListItem = () =>{
-        screenProps.removeWishListItem("removed");
+        alert('Item Removed')
+
+        screenProps.wishListButtonPress("removed");
     }
 
     return (
