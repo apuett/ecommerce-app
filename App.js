@@ -27,8 +27,8 @@ export default function App() {
   return <AppContainer screenProps={{ products: productContext,
                                       wishList: wishList,
                                       shoppingCart: shoppingCart,
-                                      wishListButtonPushed: wishListButtonPress,
-                                      shoppingCartButtonPushed: shoppingCartButtonPress }}/>;
+                                      wishListButtonPresss: wishListButtonPress,
+                                      shoppingCartButtonPress: shoppingCartButtonPress }}/>;
 }
 
 

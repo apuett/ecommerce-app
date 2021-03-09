@@ -8,7 +8,14 @@ function WishList({ screenProps,navigation }) {
     const removeWishListItem = () =>{
         alert('Item Removed')
 
-        screenProps.wishListButtonPress("removed");
+        const updatedList = screenProps.wishList;
+
+        for (let index=0;index<updatedList.length;index++){
+            if (updatedList[index].id == 0){
+                updatedList.splice(index,1)
+            };
+        };
+        screenProps.wishListButtonPress(updatedList);
     }
 
     return (
@@ -16,7 +23,7 @@ function WishList({ screenProps,navigation }) {
             <ScrollView>
                 <View style={styles.wishlist_container}>
                     <Text>Wish List</Text>
-                    <Text>{screenProps.wishList.map((i) => i.name)}</Text>
+                    <Text>{screenProps.wishList[0].name}</Text>
                     <Button title='remove' onPress={removeWishListItem}></Button>
                 </View>
             </ScrollView>
