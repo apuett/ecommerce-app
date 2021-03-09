@@ -11,12 +11,13 @@ export default function ProductDetails({ screenProps, navigation }) {
 
         const updatedList = screenProps.wishList;
         updatedList.push({
+                        id: navigation.getParam('id'),
                         name: navigation.getParam('name'),
                         price: navigation.getParam('price'),
                         description: navigation.getParam('description'),
                         image: navigation.getParam('image')
                             });
-        screenProps.wishListButtonPushed(updatedList);
+        screenProps.wishListButtonPress(updatedList);
     };
 
     const handleShoppingCartPress = ()=>{
@@ -24,12 +25,13 @@ export default function ProductDetails({ screenProps, navigation }) {
 
         const updatedList = screenProps.wishList;
         updatedList.push({
+                        id: navigation.getParam('id'),
                         name: navigation.getParam('name'),
                         price: navigation.getParam('price'),
                         description: navigation.getParam('description'),
                         image: navigation.getParam('image')
                             });
-        screenProps.shoppingCartButtonPushed(updatedList);
+        screenProps.shoppingCartButtonPress(updatedList);
     };
 
     return(
