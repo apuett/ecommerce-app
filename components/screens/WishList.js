@@ -1,13 +1,23 @@
 import React from 'react';
+import { Button } from 'react-native';
 import { View, ScrollView, Text, StyleSheet } from 'react-native';
 import NavBar from '../NavBar';
 
-function WishList({navigation}) {
+function WishList({ screenProps,navigation }) {
+
+    const removeWishListItem = () =>{
+        alert('Item Removed')
+
+        screenProps.wishListButtonPress("removed");
+    }
+
     return (
         <View style={styles.container}>
             <ScrollView>
                 <View style={styles.wishlist_container}>
                     <Text>Wish List</Text>
+                    <Text>{screenProps.wishList.map((i) => i.name)}</Text>
+                    <Button title='remove' onPress={removeWishListItem}></Button>
                 </View>
             </ScrollView>
             <NavBar navigation={navigation}></NavBar>

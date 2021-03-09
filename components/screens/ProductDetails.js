@@ -4,7 +4,34 @@ import { Card } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import NavBar from '../NavBar';
 
-export default function ProductDetails({ navigation }) {
+export default function ProductDetails({ screenProps, navigation }) {
+
+    const handleWishListPress = ()=>{
+        alert("Added to wish list");
+
+        const updatedList = screenProps.wishList;
+        updatedList.push({
+                        name: navigation.getParam('name'),
+                        price: navigation.getParam('price'),
+                        description: navigation.getParam('description'),
+                        image: navigation.getParam('image')
+                            });
+        screenProps.wishListButtonPushed(updatedList);
+    };
+
+    const handleShoppingCartPress = ()=>{
+        alert("Added to Cart");
+
+        const updatedList = screenProps.shoppingCart;
+        updatedList.push({
+                        name: navigation.getParam('name'),
+                        price: navigation.getParam('price'),
+                        description: navigation.getParam('description'),
+                        image: navigation.getParam('image')
+                            });
+        screenProps.shoppingCartButtonPushed(updatedList);
+    };
+
     return(
         <View style={styles.container}>
             <Card> 
@@ -17,11 +44,11 @@ export default function ProductDetails({ navigation }) {
                     </View>
 
                         <View style={styles.buttoncontainer}>
-                            <TouchableOpacity style={styles.button} onPress={() => alert("Added to cart")}>
+                            <TouchableOpacity style={styles.button} onPress={handleShoppingCartPress}>
                                 <Text style={styles.buttonText}>Add to Cart</Text>
                             </TouchableOpacity>
 
-                            <TouchableOpacity style={styles.button} onPress={() => alert("Added to wish list")}>
+                            <TouchableOpacity style={styles.button} onPress={handleWishListPress}>
                                 <Text style={styles.buttonText}>Add to Wish List</Text>
                             </TouchableOpacity>
                         </View>
