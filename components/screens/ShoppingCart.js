@@ -5,7 +5,21 @@ import NavBar from '../NavBar';
 
 function ShoppingCart({ screenProps,navigation }) {
 
-    const [shoppingCart, setShoppingCart] = useState(screenProps.shoppingCart); 
+    const [shoppingCart, setShoppingCart] = useState(screenProps.shoppingCart);
+    
+    const createList = () => {
+        return shoppingCart.map((element) => {
+            return (
+                <View style={{margin:10}}>
+                    <Text>{element.name}</Text>
+                    <Text>{element.price}</Text>
+                    <Button title='remove' onPress={()=>removeShoppingCartItem(element.key)}></Button>
+                </View>
+            );
+        });
+    };
+
+    const [list, setList] = useState(createList());
 
     const removeShoppingCartItem = (itemKey) =>{
         alert('Item Removed');
@@ -19,26 +33,15 @@ function ShoppingCart({ screenProps,navigation }) {
 
         setShoppingCart(updatedList);
         screenProps.shoppingCartButtonPress(updatedList);
+        setList(createList)
     }
-
-    const list = () => {
-        return shoppingCart.map((element) => {
-            return (
-                <View style={{margin:10}}>
-                    <Text>{element.name}</Text>
-                    <Text>{element.price}</Text>
-                    <Button title='remove' onPress={()=>removeShoppingCartItem(element.key)}></Button>
-                </View>
-            );
-        });
-    };
 
     return (
         <View style={styles.container}>
             <ScrollView>
                 <View style={styles.cart_container}>
                     <Text>Shopping Cart</Text>
-                    <Text>{list()}</Text>
+                    <Text>{list}</Text>
                 </View>
             </ScrollView>
             <NavBar navigation={navigation}></NavBar>

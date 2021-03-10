@@ -11,7 +11,7 @@ export default function ProductDetails({ screenProps, navigation }) {
 
         const updatedList = screenProps.wishList;
         updatedList.push({
-                        id: navigation.getParam('id'),
+                        key: navigation.getParam('key'),
                         name: navigation.getParam('name'),
                         price: navigation.getParam('price'),
                         description: navigation.getParam('description'),
@@ -25,7 +25,7 @@ export default function ProductDetails({ screenProps, navigation }) {
 
         const updatedList = screenProps.wishList;
         updatedList.push({
-                        id: navigation.getParam('id'),
+                        key: navigation.getParam('key'),
                         name: navigation.getParam('name'),
                         price: navigation.getParam('price'),
                         description: navigation.getParam('description'),

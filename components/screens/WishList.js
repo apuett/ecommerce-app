@@ -23,7 +23,6 @@ function WishList({ screenProps,navigation }) {
             <ScrollView>
                 <View style={styles.wishlist_container}>
                     <Text>Wish List</Text>
-                    <Text>{screenProps.wishList[0].name}</Text>
                     <Button title='remove' onPress={removeWishListItem}></Button>
                 </View>
             </ScrollView>
