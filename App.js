@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import Login from './components/screens/Login';
@@ -9,12 +9,6 @@ import ProductDetails from './components/screens/ProductDetails';
 import ShoppingCart from './components/screens/ShoppingCart';
 import WishList from './components/screens/WishList';
 import {products} from './components/ProductContext';
-
-// export default class App extends React.Component {
-//   render() {
-//     return <AppContainer />;
-//   }
-// }
 
 export default function App() {
 
@@ -96,4 +90,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
