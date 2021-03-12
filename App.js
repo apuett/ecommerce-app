@@ -30,12 +30,9 @@ export default function App() {
                                       shoppingCartButtonPress: shoppingCartButtonPress }}/>;
 }
 
-
-
 //-----------------------------------------------------------------------
 //Need to avoid going back to log in screen. remember to implement a auth nav.
 //------------------------------------------------------------------------
-
 
 const AppNavigator = createStackNavigator({
   Menu: {

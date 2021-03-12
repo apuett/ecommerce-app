@@ -3,7 +3,7 @@ import { Alert, Button } from 'react-native';
 import { View, ScrollView, Text, StyleSheet, Image } from 'react-native';
 import NavBar from '../NavBar';
 
-function WishList({ screenProps,navigation }) {
+function WishList({ screenProps, navigation }) {
 
     const [wishList, setWishList] = useState(screenProps.wishList); 
     const [shoppingCart] = useState(screenProps.shoppingCart); 
@@ -14,8 +14,8 @@ function WishList({ screenProps,navigation }) {
                 <View style={styles.product_container} key={index}>
                     <Image style={styles.product_image} source={element.image} />
                     <Text style={styles.product_name}>{element.name}</Text>
-                    <Button title='add to cart' style={styles.product_button} onPress={()=>addToCart(element.key, element.name, element.price, element.description, element.image)}></Button>
-                    <Button title='remove' style={styles.product_button} onPress={()=>removeWishListItem(element.key)}></Button>
+                    <Button title='add to cart' onPress={()=>addToCart(element.key, element.name, element.price, element.description, element.image)}></Button>
+                    <Button title='remove' onPress={()=>removeWishListItem(element.key)}></Button>
                 </View>
             );
         });
@@ -23,15 +23,14 @@ function WishList({ screenProps,navigation }) {
 
     const [list, setList] = useState(createList());
 
-    const removeWishListItem = (itemKey) =>{
+    const removeWishListItem = (itemKey) => {
         const updatedList = screenProps.wishList;
-        for (let index=0;index<updatedList.length;index++){
-            if (updatedList[index].key == itemKey){
+        for (let index = 0; index < updatedList.length; index++) {
+            if (updatedList[index].key == itemKey) {
                 updatedList.splice(index,1);
                 break;
             };
         };
-
         setWishList(updatedList);
         screenProps.wishListButtonPress(updatedList);
         setList(createList);
@@ -45,8 +44,8 @@ function WishList({ screenProps,navigation }) {
             description: description,
             image: image
         });
-        Alert.alert('Added to cart!');
         removeWishListItem(key);
+        Alert.alert('Added to cart!');
     };
 
     return (
@@ -85,9 +84,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 15,
     },
-    product_button: {
-
-    },
     total_price: {
         paddingTop: 50,
         textAlign: 'center', 
@@ -95,9 +91,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 23,
     },
-    purchase_button: {
-        
-    }
   });
 
   export default WishList;

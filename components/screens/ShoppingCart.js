@@ -5,8 +5,7 @@ import NavBar from '../NavBar';
 
 function ShoppingCart({ screenProps,navigation }) {
 
-    const [shoppingCart, setShoppingCart] = useState(screenProps.shoppingCart); 
-
+    const [shoppingCart, setShoppingCart] = useState(screenProps.shoppingCart);
     let totalPrice = 0;
 
     const createList = () => {
@@ -17,7 +16,7 @@ function ShoppingCart({ screenProps,navigation }) {
                     <Image style={styles.product_image} source={element.image} />
                     <Text style={styles.product_name}>{element.name}</Text>
                     <Text style={styles.product_price}>{element.price}</Text>
-                    <Button title='remove' style={styles.remove_button} onPress={()=>removeShoppingCartItem(element.key)}></Button>
+                    <Button title='remove' onPress={()=>removeShoppingCartItem(element.key)}></Button>
                 </View>
             );
         });
@@ -40,12 +39,12 @@ function ShoppingCart({ screenProps,navigation }) {
     }
 
     const clearList = () => {
-        Alert.alert('Items purchased!');
         screenProps.shoppingCart.length = 0;
-
         setShoppingCart(screenProps.shoppingCart);
         screenProps.shoppingCartButtonPress(screenProps.shoppingCart);
         setList(createList);
+
+        Alert.alert('Items purchased!');
     }
 
     return (
@@ -54,7 +53,7 @@ function ShoppingCart({ screenProps,navigation }) {
                 <View>
                     <View>{list}</View>
                     <Text style={styles.total_price}>Total: ${totalPrice}</Text>
-                    <Button title='Purchase' style={styles.purchase_button} onPress={()=> {
+                    <Button title='Purchase' onPress={()=> {
                         clearList();
                     }}></Button>
                 </View>
@@ -86,21 +85,15 @@ const styles = StyleSheet.create({
     },
     product_price: {
         fontWeight: 'bold',
-        fontSize: 15,
-    },
-    remove_button: {
-
+        fontSize: 20,
     },
     total_price: {
         paddingTop: 50,
         textAlign: 'center', 
         alignSelf: 'stretch',
         fontWeight: 'bold',
-        fontSize: 23,
+        fontSize: 20,
     },
-    purchase_button: {
-        
-    }
   });
 
 export default ShoppingCart;
