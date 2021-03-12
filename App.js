@@ -13,12 +13,6 @@ import {products} from './components/ProductContext';
 
 
 const AppNavigator = createStackNavigator({
-  Login: {
-    screen: Login,
-    navigationOptions: {
-      header: null,
-    },
-  },
   Menu: {
     screen: Menu,
     navigationOptions: {
@@ -50,7 +44,7 @@ const AppNavigator = createStackNavigator({
     },
   }
 },{
-    initialRouteName: "Login"
+    initialRouteName: "Menu"
 });
 
 const AuthNavigator = createSwitchNavigator({

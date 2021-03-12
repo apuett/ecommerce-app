@@ -7,14 +7,15 @@ function WishList({ screenProps,navigation }) {
 
     const removeWishListItem = () =>{
 
-        const updatedList = screenProps.wishList;
+        let wishList = screenProps.wishList;
 
         for (let index=0;index<updatedList.length;index++){
             if (updatedList[index].id == 0){
-                updatedList.splice(index,1)
+                updatedList.splice(index,1);
+                break;
             };
         };
-        screenProps.wishListButtonPress(updatedList);
+        screenProps.wishListButtonPress(wishList);
     }
 
     return (

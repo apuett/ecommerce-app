@@ -5,10 +5,9 @@ import NavBar from '../NavBar';
 
 function ShoppingCart({ screenProps,navigation }) {
 
-    const [shoppingCart, setShoppingCart] = useState(screenProps.shoppingCart);
     
     const createList = () => {
-        return shoppingCart.map((element) => {
+        return screenProps.shoppingCart.map((element) => {
             return (
                 <View style={{margin:10}}>
                     <Text>{element.name}</Text>
@@ -19,19 +18,20 @@ function ShoppingCart({ screenProps,navigation }) {
         });
     };
 
-    const [list, setList] = useState(createList());
+    const [list, setList] = useState(createList);
 
     const removeShoppingCartItem = (itemKey) =>{
 
-        let updatedList = screenProps.shoppingCart
-        for(let index = 0; index < updatedList.length; index++){
-            if(updatedList[index].key == itemKey){
-                updatedList.splice(index,1);
+         let shoppingCart = screenProps.shoppingCart;
+
+        for(let index = 0; index < shoppingCart.length; index++){
+            if(shoppingCart[index].key == itemKey){
+                shoppingCart.splice(index,1);
+                break;
             }
         }
 
-        setShoppingCart(updatedList);
-        screenProps.shoppingCartButtonPress(updatedList);
+        screenProps.shoppingCartButtonPress(shoppingCart);
         setList(createList)
     }
 
