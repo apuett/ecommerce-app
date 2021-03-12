@@ -41,10 +41,10 @@ function ShoppingCart({ screenProps,navigation }) {
 
     const clearList = () => {
         Alert.alert('Items purchased!');
-        let emptyList = screenProps.shoppingCart.splice();
+        screenProps.shoppingCart.length = 0;
 
-        setShoppingCart(emptyList);
-        screenProps.shoppingCartButtonPress(emptyList);
+        setShoppingCart(screenProps.shoppingCart);
+        screenProps.shoppingCartButtonPress(screenProps.shoppingCart);
         setList(createList);
     }
 
