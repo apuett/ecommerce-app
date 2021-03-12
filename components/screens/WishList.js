@@ -6,6 +6,7 @@ import NavBar from '../NavBar';
 function WishList({ screenProps,navigation }) {
 
     const [wishList, setWishList] = useState(screenProps.wishList); 
+    const [shoppingCart, setShoppingCart] = useState(screenProps.shoppingCart); 
 
     const createList = () => {
         return wishList.map((element, index) => {
@@ -13,7 +14,8 @@ function WishList({ screenProps,navigation }) {
                 <View style={styles.product_container} key={index}>
                     <Image style={styles.product_image} source={element.image} />
                     <Text style={styles.product_name}>{element.name}</Text>
-                    <Button title='remove' style={styles.remove_button} onPress={()=>removeWishListItem(element.key)}></Button>
+                    <Button title='add to cart' style={styles.product_button} onPress={()=>addToCart(element.key, element.name, element.price, element.description, element.image)}></Button>
+                    <Button title='remove' style={styles.product_button} onPress={()=>removeWishListItem(element.key)}></Button>
                 </View>
             );
         });
@@ -22,8 +24,6 @@ function WishList({ screenProps,navigation }) {
     const [list, setList] = useState(createList());
 
     const removeWishListItem = (itemKey) =>{
-        alert('Item Removed')
-
         const updatedList = screenProps.wishList;
         for (let index=0;index<updatedList.length;index++){
             if (updatedList[index].key == itemKey){
@@ -36,6 +36,23 @@ function WishList({ screenProps,navigation }) {
         screenProps.wishListButtonPress(updatedList);
         setList(createList);
     }
+
+    const addToCart = (key, name, price, description, image) => {
+        const shoppingList = screenProps.shoppingCart;
+        shoppingList.push({           
+            key: key,
+            name: name,
+            price: price,
+            description: description,
+            image: image
+        });
+
+        setShoppingCart(shoppingList);
+        screenProps.shoppingCartButtonPress(shoppingList);
+
+        Alert.alert('Added to cart!');
+        removeWishListItem(key);
+    };
 
     return (
         <View style={styles.container}>
@@ -73,7 +90,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 15,
     },
-    remove_button: {
+    product_button: {
 
     },
     total_price: {

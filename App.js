@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import { StyleSheet } from 'react-native';
 import { createAppContainer,createSwitchNavigator  } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import Login from './components/screens/Login';

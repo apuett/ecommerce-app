@@ -26,8 +26,6 @@ function ShoppingCart({ screenProps,navigation }) {
     const [list, setList] = useState(createList());
 
     const removeShoppingCartItem = (itemKey) =>{
-        alert('Item Removed');
-
         let updatedList = screenProps.shoppingCart;
         for(let index = 0; index < updatedList.length; index++){
             if(updatedList[index].key == itemKey){
