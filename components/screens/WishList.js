@@ -1,30 +1,47 @@
-import React from 'react';
-import { Button } from 'react-native';
-import { View, ScrollView, Text, StyleSheet } from 'react-native';
+import React, {useState} from 'react';
+import { Alert, Button } from 'react-native';
+import { View, ScrollView, Text, StyleSheet, Image } from 'react-native';
 import NavBar from '../NavBar';
 
 function WishList({ screenProps,navigation }) {
 
-    const removeWishListItem = () =>{
+    const [wishList, setWishList] = useState(screenProps.wishList); 
+
+    const createList = () => {
+        return wishList.map((element, index) => {
+            return (
+                <View style={styles.product_container} key={index}>
+                    <Image style={styles.product_image} source={element.image} />
+                    <Text style={styles.product_name}>{element.name}</Text>
+                    <Button title='remove' style={styles.remove_button} onPress={()=>removeWishListItem(element.key)}></Button>
+                </View>
+            );
+        });
+    };
+
+    const [list, setList] = useState(createList());
+
+    const removeWishListItem = (itemKey) =>{
         alert('Item Removed')
 
         const updatedList = screenProps.wishList;
-
         for (let index=0;index<updatedList.length;index++){
-            if (updatedList[index].id == 0){
-                updatedList.splice(index,1)
+            if (updatedList[index].key == itemKey){
+                updatedList.splice(index,1);
+                break;
             };
         };
+
+        setWishList(updatedList);
         screenProps.wishListButtonPress(updatedList);
+        setList(createList);
     }
 
     return (
         <View style={styles.container}>
             <ScrollView>
-                <View style={styles.wishlist_container}>
-                    <Text>Wish List</Text>
-                    <Text>{screenProps.wishList[0].name}</Text>
-                    <Button title='remove' onPress={removeWishListItem}></Button>
+                <View>
+                    <View>{list}</View>
                 </View>
             </ScrollView>
             <NavBar navigation={navigation}></NavBar>
@@ -33,15 +50,42 @@ function WishList({ screenProps,navigation }) {
 }
 
 const styles = StyleSheet.create({
-    container: {
+    container: {        
         flex: 1,
+        paddingTop: 40,
     },
-    wishlist_container: {
-      flex: 1,  
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
+    cart_container: {
+        alignItems: 'center',
     },
+    product_container: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent:'space-between',
+    },
+    product_image: {
+        height: 70,
+        width: 70,
+    },
+    product_name: {
+        fontSize: 20,
+    },
+    product_price: {
+        fontWeight: 'bold',
+        fontSize: 15,
+    },
+    remove_button: {
+
+    },
+    total_price: {
+        paddingTop: 50,
+        textAlign: 'center', 
+        alignSelf: 'stretch',
+        fontWeight: 'bold',
+        fontSize: 23,
+    },
+    purchase_button: {
+        
+    }
   });
 
-export default WishList
+  export default WishList;

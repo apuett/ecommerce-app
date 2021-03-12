@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { StyleSheet } from 'react-native';
-import { createAppContainer } from "react-navigation";
+import { createAppContainer,createSwitchNavigator  } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import Login from './components/screens/Login';
 import Menu from './components/screens/Menu';
@@ -27,7 +27,7 @@ export default function App() {
   return <AppContainer screenProps={{ products: productContext,
                                       wishList: wishList,
                                       shoppingCart: shoppingCart,
-                                      wishListButtonPresss: wishListButtonPress,
+                                      wishListButtonPress: wishListButtonPress,
                                       shoppingCartButtonPress: shoppingCartButtonPress }}/>;
 }
 
@@ -39,12 +39,6 @@ export default function App() {
 
 
 const AppNavigator = createStackNavigator({
-  Login: {
-    screen: Login,
-    navigationOptions: {
-      header: null,
-    },
-  },
   Menu: {
     screen: Menu,
     navigationOptions: {
@@ -76,17 +70,23 @@ const AppNavigator = createStackNavigator({
     },
   }
 },{
-    initialRouteName: "Login"
+    initialRouteName: "Menu"
 });
 
-const AppContainer = createAppContainer(AppNavigator);
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+const AuthNavigator = createSwitchNavigator({
+  Login: {
+    screen: Login,
+    navigationOptions: {
+      header: null,
+    },
   },
 });
+
+const MainNavigator = createSwitchNavigator({
+  App: AppNavigator,
+  Auth: AuthNavigator
+},{
+  initialRouteName: 'Auth'
+});
+
+const AppContainer = createAppContainer(MainNavigator);

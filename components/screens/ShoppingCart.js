@@ -32,6 +32,7 @@ function ShoppingCart({ screenProps,navigation }) {
         for(let index = 0; index < updatedList.length; index++){
             if(updatedList[index].key == itemKey){
                 updatedList.splice(index,1);
+                break;
             }
         }
 
