@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { createAppContainer } from "react-navigation";
+import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import Login from './components/screens/Login';
 import Menu from './components/screens/Menu';
@@ -10,38 +10,6 @@ import ShoppingCart from './components/screens/ShoppingCart';
 import WishList from './components/screens/WishList';
 import {products} from './components/ProductContext';
 
-// export default class App extends React.Component {
-//   render() {
-//     return <AppContainer />;
-//   }
-// }
-
-export default function App() {
-
-  const [productContext] = useState(products);
-
-  const [wishList, setWishList] = useState([]);
-  const wishListButtonPress = (updatedList) => {
-    setWishList(updatedList);
-  };
-
-  const [shoppingCart, setShoppingCart] = useState([]);
-  const shoppingCartButtonPress = (updatedCart) =>{
-    setShoppingCart(updatedCart);
-  };
-
-  return <AppContainer screenProps={{ products: productContext,
-                                      wishList: wishList,
-                                      shoppingCart: shoppingCart,
-                                      wishListButtonPress: wishListButtonPress,
-                                      shoppingCartButtonPress: shoppingCartButtonPress }}/>;
-}
-
-
-
-//-----------------------------------------------------------------------
-//Need to avoid going back to log in screen. remember to implement a auth nav.
-//------------------------------------------------------------------------
 
 
 const AppNavigator = createStackNavigator({
@@ -85,7 +53,48 @@ const AppNavigator = createStackNavigator({
     initialRouteName: "Login"
 });
 
-const AppContainer = createAppContainer(AppNavigator);
+const AuthNavigator = createSwitchNavigator({
+  Login: {
+    screen: Login,
+    navigationOptions: {
+      header: null,
+    },
+  },
+});
+
+const MainNavigator = createSwitchNavigator({
+  App: AppNavigator,
+  Auth: AuthNavigator
+},{
+  initialRouteName: 'Auth'
+});
+
+const AppContainer = createAppContainer(MainNavigator);
+
+
+
+
+export default function App() {
+
+  const [productContext] = useState(products);
+
+  const [wishList, setWishList] = useState([]);
+  const wishListButtonPress = (updatedList) => {
+    setWishList(updatedList);
+  };
+
+  const [shoppingCart, setShoppingCart] = useState([]);
+  const shoppingCartButtonPress = (updatedCart) =>{
+    setShoppingCart(updatedCart);
+  };
+
+  return <AppContainer screenProps={{ products: productContext,
+                                      wishList,
+                                      shoppingCart,
+                                      wishListButtonPress,
+                                      shoppingCartButtonPress }}/>;
+}
+
 
 
 const styles = StyleSheet.create({

@@ -7,7 +7,6 @@ import NavBar from '../NavBar';
 export default function ProductDetails({ screenProps, navigation }) {
 
     const handleWishListPress = ()=>{
-        alert("Added to wish list");
 
         const updatedList = screenProps.wishList;
         updatedList.push({
@@ -21,7 +20,6 @@ export default function ProductDetails({ screenProps, navigation }) {
     };
 
     const handleShoppingCartPress = ()=>{
-        alert("Added to Cart");
 
         const updatedList = screenProps.wishList;
         updatedList.push({
