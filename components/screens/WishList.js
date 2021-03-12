@@ -6,7 +6,7 @@ import NavBar from '../NavBar';
 function WishList({ screenProps,navigation }) {
 
     const [wishList, setWishList] = useState(screenProps.wishList); 
-    const [shoppingCart, setShoppingCart] = useState(screenProps.shoppingCart); 
+    const [shoppingCart] = useState(screenProps.shoppingCart); 
 
     const createList = () => {
         return wishList.map((element, index) => {
@@ -38,18 +38,13 @@ function WishList({ screenProps,navigation }) {
     }
 
     const addToCart = (key, name, price, description, image) => {
-        const shoppingList = screenProps.shoppingCart;
-        shoppingList.push({           
+        shoppingCart.push({           
             key: key,
             name: name,
             price: price,
             description: description,
             image: image
         });
-
-        setShoppingCart(shoppingList);
-        screenProps.shoppingCartButtonPress(shoppingList);
-
         Alert.alert('Added to cart!');
         removeWishListItem(key);
     };

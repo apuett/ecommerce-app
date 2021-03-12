@@ -23,7 +23,7 @@ export default function ProductDetails({ screenProps, navigation }) {
     const handleShoppingCartPress = ()=>{
         alert("Added to Cart");
 
-        const updatedList = screenProps.wishList;
+        const updatedList = screenProps.shoppingCart;
         updatedList.push({
                         key: navigation.getParam('key'),
                         name: navigation.getParam('name'),
