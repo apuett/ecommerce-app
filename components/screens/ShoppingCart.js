@@ -9,7 +9,7 @@ function ShoppingCart({ screenProps,navigation }) {
     const createList = () => {
         return screenProps.shoppingCart.map((element) => {
             return (
-                <View style={{margin:10}}>
+                <View>
                     <Text>{element.name}</Text>
                     <Text>{element.price}</Text>
                     <Button title='remove' onPress={()=>removeShoppingCartItem(element.key)}></Button>
