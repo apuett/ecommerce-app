@@ -22,7 +22,7 @@ function ShoppingCart({ screenProps,navigation }) {
 
     const removeShoppingCartItem = (itemKey) =>{
 
-         let shoppingCart = screenProps.shoppingCart;
+        let shoppingCart = screenProps.shoppingCart;
 
         for(let index = 0; index < shoppingCart.length; index++){
             if(shoppingCart[index].key == itemKey){
