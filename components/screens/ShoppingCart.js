@@ -6,8 +6,8 @@ import NavBar from '../NavBar';
 function ShoppingCart({ screenProps,navigation }) {
 
     
-    const createList = () => {
-        return screenProps.shoppingCart.map((element) => {
+    const createList = (shoppingCart) => {
+        return shoppingCart.map((element) => {
             return (
                 <View>
                     <Text>{element.name}</Text>
@@ -18,11 +18,10 @@ function ShoppingCart({ screenProps,navigation }) {
         });
     };
 
-    const [list, setList] = useState(createList);
+    const [shoppingCart] = useState(screenProps.shoppingCart.slice()) 
+    const [list, setList] = useState(createList(screenProps.shoppingCart));
 
     const removeShoppingCartItem = (itemKey) =>{
-
-        let shoppingCart = screenProps.shoppingCart;
 
         for(let index = 0; index < shoppingCart.length; index++){
             if(shoppingCart[index].key == itemKey){
@@ -32,7 +31,7 @@ function ShoppingCart({ screenProps,navigation }) {
         }
 
         screenProps.shoppingCartButtonPress(shoppingCart);
-        setList(createList)
+        setList(createList(shoppingCart))
     }
 
     return (
