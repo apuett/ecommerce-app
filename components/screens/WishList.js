@@ -9,9 +9,9 @@ function WishList({ screenProps,navigation }) {
 
         let wishList = screenProps.wishList;
 
-        for (let index=0;index<updatedList.length;index++){
-            if (updatedList[index].id == 0){
-                updatedList.splice(index,1);
+        for (let index=0;index<wishList.length;index++){
+            if (wishList[index].id == 0){
+                wishList.splice(index,1);
                 break;
             };
         };
