@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, ScrollView, Text, StyleSheet, Image, Alert, Button } from 'react-native';
 import NavBar from '../NavBar';
 
-function ShoppingCart({ screenProps,navigation }) {
+function ShoppingCart({ screenProps, navigation }) {
 
     const [shoppingCart, setShoppingCart] = useState(screenProps.shoppingCart);
     let totalPrice = 0;
@@ -23,11 +23,11 @@ function ShoppingCart({ screenProps,navigation }) {
 
     const [list, setList] = useState(createList());
 
-    const removeShoppingCartItem = (itemKey) =>{
+    const removeShoppingCartItem = (itemKey) => {
         let updatedList = screenProps.shoppingCart;
-        for(let index = 0; index < updatedList.length; index++){
-            if(updatedList[index].key == itemKey){
-                updatedList.splice(index,1);
+        for(let index = 0; index < updatedList.length; index++) {
+            if (updatedList[index].key == itemKey) {
+                updatedList.splice(index, 1);
                 break;
             }
         }
@@ -50,7 +50,7 @@ function ShoppingCart({ screenProps,navigation }) {
         <View style={styles.container}>
             <ScrollView>
                 <View>
-                    <View>{list}</View>
+                    {list}
                     <Text style={styles.total_price}>Total: ${totalPrice}</Text>
                     <Button title='Purchase' onPress={()=> {
                         clearList();

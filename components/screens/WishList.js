@@ -37,7 +37,6 @@ function WishList({ screenProps, navigation }) {
 
     const addToCart = (key, name, price, description, image) => {
         shoppingCart.push({           
-            key: key,
             name: name,
             price: price,
             description: description,
@@ -50,9 +49,7 @@ function WishList({ screenProps, navigation }) {
     return (
         <View style={styles.container}>
             <ScrollView>
-                <View>
-                    <View>{list}</View>
-                </View>
+                {list}
             </ScrollView>
             <NavBar navigation={navigation}></NavBar>
         </View>
