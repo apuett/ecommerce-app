@@ -18,11 +18,12 @@ function ShoppingCart({ screenProps,navigation }) {
         });
     };
 
-    const [shoppingCart] = useState(screenProps.shoppingCart.slice()) 
     const [list, setList] = useState(createList(screenProps.shoppingCart));
 
     const removeShoppingCartItem = (itemKey) =>{
-
+        
+        shoppingCart = screenProps.shoppingCart;
+        
         for(let index = 0; index < shoppingCart.length; index++){
             if(shoppingCart[index].key == itemKey){
                 shoppingCart.splice(index,1);
