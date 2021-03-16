@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
-import { Alert, Button } from 'react-native';
-import { View, ScrollView, Text, StyleSheet, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, ScrollView, Text, StyleSheet, Image, Alert, Button } from 'react-native';
 import NavBar from '../NavBar';
 
 function WishList({ screenProps, navigation }) {
@@ -14,8 +13,8 @@ function WishList({ screenProps, navigation }) {
                 <View style={styles.product_container} key={index}>
                     <Image style={styles.product_image} source={element.image} />
                     <Text style={styles.product_name}>{element.name}</Text>
-                    <Button title='add to cart' onPress={()=>addToCart(element.key, element.name, element.price, element.description, element.image)}></Button>
-                    <Button title='remove' onPress={()=>removeWishListItem(element.key)}></Button>
+                    <Button title='Add to Cart' onPress={()=>addToCart(element.key, element.name, element.price, element.description, element.image)}></Button>
+                    <Button title='Remove' onPress={()=>removeWishListItem(element.key)}></Button>
                 </View>
             );
         });
@@ -45,7 +44,7 @@ function WishList({ screenProps, navigation }) {
             image: image
         });
         removeWishListItem(key);
-        Alert.alert('Added to cart!');
+        Alert.alert("Commerce", "Added to cart!");
     };
 
     return (

@@ -1,14 +1,12 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image } from 'react-native';
+import { View, StyleSheet, Text, Image, Alert } from 'react-native';
 import { Card } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import NavBar from '../NavBar';
 
 export default function ProductDetails({ screenProps, navigation }) {
 
-    const handleWishListPress = ()=>{
-        alert("Added to wish list");
-
+    const handleWishListPress = () => {
         const updatedList = screenProps.wishList;
         updatedList.push({
                         key: navigation.getParam('key'),
@@ -18,11 +16,11 @@ export default function ProductDetails({ screenProps, navigation }) {
                         image: navigation.getParam('image')
                             });
         screenProps.wishListButtonPress(updatedList);
+
+        Alert.alert("Commerce", "Added to wish list");
     };
 
-    const handleShoppingCartPress = ()=>{
-        alert("Added to Cart");
-
+    const handleShoppingCartPress = () => {
         const updatedList = screenProps.shoppingCart;
         updatedList.push({
                         key: navigation.getParam('key'),
@@ -32,6 +30,8 @@ export default function ProductDetails({ screenProps, navigation }) {
                         image: navigation.getParam('image')
                             });
         screenProps.shoppingCartButtonPress(updatedList);
+
+        Alert.alert("Commerce", "Added to Cart");
     };
 
     return(
@@ -41,7 +41,7 @@ export default function ProductDetails({ screenProps, navigation }) {
                 <Image style={styles.image} source={navigation.getParam('image')} />
                     <View style={styles.textcontainer}>
                         <Text style={styles.name}>{navigation.getParam('name')}</Text>
-                        <Text style={styles.price}>{navigation.getParam('price')}</Text>
+                        <Text style={styles.price}>${navigation.getParam('price')}</Text>
                         <Text style={styles.description}>{navigation.getParam('description')}</Text>
                     </View>
 

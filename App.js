@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { createAppContainer,createSwitchNavigator  } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import Login from './components/screens/Login';
@@ -7,7 +7,7 @@ import Product from './components/screens/Product';
 import ProductDetails from './components/screens/ProductDetails';
 import ShoppingCart from './components/screens/ShoppingCart';
 import WishList from './components/screens/WishList';
-import {products} from './components/ProductContext';
+import { products } from './components/ProductContext';
 
 export default function App() {
 
@@ -30,10 +30,6 @@ export default function App() {
                                       shoppingCartButtonPress: shoppingCartButtonPress }}/>;
 }
 
-//-----------------------------------------------------------------------
-//Need to avoid going back to log in screen. remember to implement a auth nav.
-//------------------------------------------------------------------------
-
 const AppNavigator = createStackNavigator({
   Menu: {
     screen: Menu,
@@ -50,7 +46,7 @@ const AppNavigator = createStackNavigator({
   ProductDetails: {
     screen: ProductDetails,
     navigationOptions: {
-      title:"ProductDetails"
+      title:"Product Details"
     },
   }, 
   ShoppingCart: {

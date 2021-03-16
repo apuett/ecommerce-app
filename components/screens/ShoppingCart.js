@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
-import { Alert, Button } from 'react-native';
-import { View, ScrollView, Text, StyleSheet, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, ScrollView, Text, StyleSheet, Image, Alert, Button } from 'react-native';
 import NavBar from '../NavBar';
 
 function ShoppingCart({ screenProps,navigation }) {
@@ -15,8 +14,8 @@ function ShoppingCart({ screenProps,navigation }) {
                 <View style={styles.product_container} key={index}>
                     <Image style={styles.product_image} source={element.image} />
                     <Text style={styles.product_name}>{element.name}</Text>
-                    <Text style={styles.product_price}>{element.price}</Text>
-                    <Button title='remove' onPress={()=>removeShoppingCartItem(element.key)}></Button>
+                    <Text style={styles.product_price}>${element.price}</Text>
+                    <Button title='Remove' onPress={()=>removeShoppingCartItem(element.key)}></Button>
                 </View>
             );
         });
@@ -44,7 +43,7 @@ function ShoppingCart({ screenProps,navigation }) {
         screenProps.shoppingCartButtonPress(screenProps.shoppingCart);
         setList(createList);
 
-        Alert.alert('Items purchased!');
+        Alert.alert("Commerce", "Items purchased!");
     }
 
     return (
