@@ -9,7 +9,7 @@ export default function Product(props) {
             <Image style={styles.image} source={props.image} />
                 <View style={styles.textContainer}>
                     <Text style={styles.name}>{props.name}</Text>
-                    <Text style={styles.price}>{props.price}</Text>
+                    <Text style={styles.price}>${props.price}</Text>
                 </View>
             </View>
         </Card>

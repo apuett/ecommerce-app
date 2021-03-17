@@ -18,7 +18,7 @@ function NavBar({navigation}) {
                 <AntDesign name="bars" size={30} color="#000000"/>
                 <Text>Wish List</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.nav_button} onPress={() => navigation.push('Login')}>
+            <TouchableOpacity style={styles.nav_button} onPress={() => navigation.navigate('Login')}>
                 <AntDesign name="user" size={27} color="#000000"/>
                 <Text>Log Out</Text>
             </TouchableOpacity>
@@ -44,4 +44,4 @@ const styles = StyleSheet.create({
     }
   });
 
-export default NavBar
+export default NavBar;

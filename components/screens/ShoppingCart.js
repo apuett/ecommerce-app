@@ -1,12 +1,10 @@
-import React, {useState} from 'react';
-import { Alert, Button } from 'react-native';
-import { View, ScrollView, Text, StyleSheet, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, ScrollView, Text, StyleSheet, Image, Alert, Button } from 'react-native';
 import NavBar from '../NavBar';
 
-function ShoppingCart({ screenProps,navigation }) {
+function ShoppingCart({ screenProps, navigation }) {
 
-    const [shoppingCart, setShoppingCart] = useState(screenProps.shoppingCart); 
-
+    const [shoppingCart, setShoppingCart] = useState(screenProps.shoppingCart);
     let totalPrice = 0;
 
     const createList = () => {
@@ -16,8 +14,8 @@ function ShoppingCart({ screenProps,navigation }) {
                 <View style={styles.product_container} key={index}>
                     <Image style={styles.product_image} source={element.image} />
                     <Text style={styles.product_name}>{element.name}</Text>
-                    <Text style={styles.product_price}>{element.price}</Text>
-                    <Button title='remove' style={styles.remove_button} onPress={()=>removeShoppingCartItem(element.key)}></Button>
+                    <Text style={styles.product_price}>${element.price}</Text>
+                    <Button title='Remove' onPress={()=>removeShoppingCartItem(element.key)}></Button>
                 </View>
             );
         });
@@ -25,13 +23,12 @@ function ShoppingCart({ screenProps,navigation }) {
 
     const [list, setList] = useState(createList());
 
-    const removeShoppingCartItem = (itemKey) =>{
-        alert('Item Removed');
-
+    const removeShoppingCartItem = (itemKey) => {
         let updatedList = screenProps.shoppingCart;
-        for(let index = 0; index < updatedList.length; index++){
-            if(updatedList[index].key == itemKey){
-                updatedList.splice(index,1);
+        for(let index = 0; index < updatedList.length; index++) {
+            if (updatedList[index].key == itemKey) {
+                updatedList.splice(index, 1);
+                break;
             }
         }
 
@@ -41,21 +38,21 @@ function ShoppingCart({ screenProps,navigation }) {
     }
 
     const clearList = () => {
-        Alert.alert('Items purchased!');
-        let emptyList = screenProps.shoppingCart.splice();
-
-        setShoppingCart(emptyList);
-        screenProps.shoppingCartButtonPress(emptyList);
+        screenProps.shoppingCart.length = 0;
+        setShoppingCart(screenProps.shoppingCart);
+        screenProps.shoppingCartButtonPress(screenProps.shoppingCart);
         setList(createList);
+
+        Alert.alert("Commerce", "Items purchased!");
     }
 
     return (
         <View style={styles.container}>
             <ScrollView>
                 <View>
-                    <View>{list}</View>
+                    {list}
                     <Text style={styles.total_price}>Total: ${totalPrice}</Text>
-                    <Button title='Purchase' style={styles.purchase_button} onPress={()=> {
+                    <Button title='Purchase' onPress={()=> {
                         clearList();
                     }}></Button>
                 </View>
@@ -87,21 +84,15 @@ const styles = StyleSheet.create({
     },
     product_price: {
         fontWeight: 'bold',
-        fontSize: 15,
-    },
-    remove_button: {
-
+        fontSize: 20,
     },
     total_price: {
         paddingTop: 50,
         textAlign: 'center', 
         alignSelf: 'stretch',
         fontWeight: 'bold',
-        fontSize: 23,
+        fontSize: 20,
     },
-    purchase_button: {
-        
-    }
   });
 
 export default ShoppingCart;

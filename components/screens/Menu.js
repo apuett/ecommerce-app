@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { StyleSheet, View, FlatList, Text } from 'react-native';
 import Product from '../screens/Product';
 import NavBar from '../NavBar';
