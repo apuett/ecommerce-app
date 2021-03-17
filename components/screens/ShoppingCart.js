@@ -4,10 +4,9 @@ import NavBar from '../NavBar';
 
 function ShoppingCart({ screenProps, navigation }) {
 
-    const [shoppingCart, setShoppingCart] = useState(screenProps.shoppingCart);
     let totalPrice = 0;
 
-    const createList = () => {
+    const createList = (shoppingCart) => {
         return shoppingCart.map((element, index) => {
             totalPrice += element.price;
             return (
@@ -21,27 +20,27 @@ function ShoppingCart({ screenProps, navigation }) {
         });
     };
 
-    const [list, setList] = useState(createList());
+    const [list, setList] = useState(createList(screenProps.shoppingCart));
 
-    const removeShoppingCartItem = (itemKey) => {
-        let updatedList = screenProps.shoppingCart;
-        for(let index = 0; index < updatedList.length; index++) {
-            if (updatedList[index].key == itemKey) {
-                updatedList.splice(index, 1);
+    const removeShoppingCartItem = (itemKey) =>{
+        
+        shoppingCart = screenProps.shoppingCart;
+        
+        for(let index = 0; index < shoppingCart.length; index++){
+            if(shoppingCart[index].key == itemKey){
+                shoppingCart.splice(index,1);
                 break;
             }
         }
 
-        setShoppingCart(updatedList);
-        screenProps.shoppingCartButtonPress(updatedList);
-        setList(createList);
-    }
+        screenProps.shoppingCartButtonPress(shoppingCart);
+        setList(createList(shoppingCart))
+    };
 
     const clearList = () => {
         screenProps.shoppingCart.length = 0;
-        setShoppingCart(screenProps.shoppingCart);
         screenProps.shoppingCartButtonPress(screenProps.shoppingCart);
-        setList(createList);
+        setList(createList(screenProps.shoppingCart));
 
         Alert.alert("Commerce", "Items purchased!");
     }

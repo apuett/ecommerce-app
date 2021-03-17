@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { StyleSheet } from 'react-native';
 import { createAppContainer,createSwitchNavigator  } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import Login from './components/screens/Login';
@@ -7,28 +8,8 @@ import Product from './components/screens/Product';
 import ProductDetails from './components/screens/ProductDetails';
 import ShoppingCart from './components/screens/ShoppingCart';
 import WishList from './components/screens/WishList';
-import { products } from './components/ProductContext';
+import {products} from './components/ProductContext';
 
-export default function App() {
-
-  const [productContext] = useState(products);
-
-  const [wishList, setWishList] = useState([]);
-  const wishListButtonPress = (updatedList) => {
-    setWishList(updatedList);
-  };
-
-  const [shoppingCart, setShoppingCart] = useState([]);
-  const shoppingCartButtonPress = (updatedCart) =>{
-    setShoppingCart(updatedCart);
-  };
-
-  return <AppContainer screenProps={{ products: productContext,
-                                      wishList: wishList,
-                                      shoppingCart: shoppingCart,
-                                      wishListButtonPress: wishListButtonPress,
-                                      shoppingCartButtonPress: shoppingCartButtonPress }}/>;
-}
 
 const AppNavigator = createStackNavigator({
   Menu: {
@@ -82,3 +63,39 @@ const MainNavigator = createSwitchNavigator({
 });
 
 const AppContainer = createAppContainer(MainNavigator);
+
+
+
+
+export default function App() {
+
+  const [productContext] = useState(products);
+
+  const [wishList, setWishList] = useState([]);
+  const wishListButtonPress = (updatedList) => {
+    setWishList(updatedList);
+  };
+
+  const [shoppingCart, setShoppingCart] = useState([]);
+  const shoppingCartButtonPress = (updatedCart) =>{
+    setShoppingCart(updatedCart);
+  };
+
+  return <AppContainer screenProps={{ products: productContext,
+                                      wishList,
+                                      shoppingCart,
+                                      wishListButtonPress,
+                                      shoppingCartButtonPress }}/>;
+}
+
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+
