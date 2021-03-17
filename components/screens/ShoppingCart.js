@@ -1,18 +1,20 @@
-import React, {useState} from 'react';
-import { Button } from 'react-native';
-import { View, ScrollView, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, ScrollView, Text, StyleSheet, Image, Alert, Button } from 'react-native';
 import NavBar from '../NavBar';
 
-function ShoppingCart({ screenProps,navigation }) {
+function ShoppingCart({ screenProps, navigation }) {
 
-    
+    let totalPrice = 0;
+
     const createList = (shoppingCart) => {
-        return shoppingCart.map((element) => {
+        return shoppingCart.map((element, index) => {
+            totalPrice += element.price;
             return (
-                <View>
-                    <Text>{element.name}</Text>
-                    <Text>{element.price}</Text>
-                    <Button title='remove' onPress={()=>removeShoppingCartItem(element.key)}></Button>
+                <View style={styles.product_container} key={index}>
+                    <Image style={styles.product_image} source={element.image} />
+                    <Text style={styles.product_name}>{element.name}</Text>
+                    <Text style={styles.product_price}>${element.price}</Text>
+                    <Button title='Remove' onPress={()=>removeShoppingCartItem(element.key)}></Button>
                 </View>
             );
         });
@@ -33,14 +35,25 @@ function ShoppingCart({ screenProps,navigation }) {
 
         screenProps.shoppingCartButtonPress(shoppingCart);
         setList(createList(shoppingCart))
+    };
+
+    const clearList = () => {
+        screenProps.shoppingCart.length = 0;
+        screenProps.shoppingCartButtonPress(screenProps.shoppingCart);
+        setList(createList(screenProps.shoppingCart));
+
+        Alert.alert("Commerce", "Items purchased!");
     }
 
     return (
         <View style={styles.container}>
             <ScrollView>
-                <View style={styles.cart_container}>
-                    <Text>Shopping Cart</Text>
-                    <Text>{list}</Text>
+                <View>
+                    {list}
+                    <Text style={styles.total_price}>Total: ${totalPrice}</Text>
+                    <Button title='Purchase' onPress={()=> {
+                        clearList();
+                    }}></Button>
                 </View>
             </ScrollView>
             <NavBar navigation={navigation}></NavBar>
@@ -49,15 +62,36 @@ function ShoppingCart({ screenProps,navigation }) {
 }
 
 const styles = StyleSheet.create({
-    container: {
+    container: {        
         flex: 1,
+        paddingTop: 40,
     },
     cart_container: {
-      flex: 1,  
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
+        alignItems: 'center',
+    },
+    product_container: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent:'space-between',
+    },
+    product_image: {
+        height: 70,
+        width: 70,
+    },
+    product_name: {
+        fontSize: 20,
+    },
+    product_price: {
+        fontWeight: 'bold',
+        fontSize: 20,
+    },
+    total_price: {
+        paddingTop: 50,
+        textAlign: 'center', 
+        alignSelf: 'stretch',
+        fontWeight: 'bold',
+        fontSize: 20,
     },
   });
 
-export default ShoppingCart
+export default ShoppingCart;

@@ -1,5 +1,5 @@
-import React from 'react'
-import { Button, View } from 'react-native'
+import React from 'react';
+import { Button, View } from 'react-native';
 
 function MenuButton({navigation}) {
     return (
@@ -9,4 +9,4 @@ function MenuButton({navigation}) {
     )
 }
 
-export default MenuButton
+export default MenuButton;

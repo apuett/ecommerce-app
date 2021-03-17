@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { createAppContainer, createSwitchNavigator } from "react-navigation";
+import React, { useState } from 'react';
+import { StyleSheet } from 'react-native';
+import { createAppContainer,createSwitchNavigator  } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import Login from './components/screens/Login';
 import Menu from './components/screens/Menu';
@@ -9,7 +9,6 @@ import ProductDetails from './components/screens/ProductDetails';
 import ShoppingCart from './components/screens/ShoppingCart';
 import WishList from './components/screens/WishList';
 import {products} from './components/ProductContext';
-
 
 
 const AppNavigator = createStackNavigator({
@@ -28,7 +27,7 @@ const AppNavigator = createStackNavigator({
   ProductDetails: {
     screen: ProductDetails,
     navigationOptions: {
-      title:"ProductDetails"
+      title:"Product Details"
     },
   }, 
   ShoppingCart: {
