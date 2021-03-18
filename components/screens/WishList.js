@@ -7,7 +7,7 @@ function WishList({ screenProps, navigation }) {
     const [wishList, setWishList] = useState(screenProps.wishList); 
     const [shoppingCart] = useState(screenProps.shoppingCart); 
 
-    const createList = () => {
+    const createList = (wishList) => {
         return wishList.map((element, index) => {
             return (
                 <View style={styles.product_container} key={index}>
@@ -20,19 +20,20 @@ function WishList({ screenProps, navigation }) {
         });
     };
 
-    const [list, setList] = useState(createList());
+    const [list, setList] = useState(createList(screenProps.wishList));
 
-    const removeWishListItem = (itemKey) => {
-        const updatedList = screenProps.wishList;
-        for (let index = 0; index < updatedList.length; index++) {
-            if (updatedList[index].key == itemKey) {
-                updatedList.splice(index,1);
+    const removeWishListItem = (itemKey) =>{
+
+        let wishList = screenProps.wishList;
+
+        for (let index=0;index<wishList.length;index++){
+            if (wishList[index].key == itemKey){
+                wishList.splice(index,1);
                 break;
             };
         };
-        setWishList(updatedList);
-        screenProps.wishListButtonPress(updatedList);
-        setList(createList);
+        screenProps.wishListButtonPress(wishList);
+        setList(createList(wishList))
     }
 
     const addToCart = (key, name, price, description, image) => {
@@ -91,3 +92,4 @@ const styles = StyleSheet.create({
   });
 
   export default WishList;
+

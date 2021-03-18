@@ -6,6 +6,7 @@ import NavBar from '../NavBar';
 
 export default function ProductDetails({ screenProps, navigation }) {
 
+
     const handleWishListPress = () => {
         const updatedList = screenProps.wishList;
         updatedList.push({
