@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         justifyContent:'space-between',
+        paddingBottom: 50,
     },
     product_image: {
         height: 70,
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
     total_price: {
-        paddingTop: 50,
+        paddingTop: 20,
         textAlign: 'center', 
         alignSelf: 'stretch',
         fontWeight: 'bold',
