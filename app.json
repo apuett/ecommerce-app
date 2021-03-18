@@ -17,7 +17,10 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSFaceIDUsageDescription":"This app uses face id to log in "
+      }
     },
     "android": {
       "adaptiveIcon": {

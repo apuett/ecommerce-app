@@ -2,10 +2,38 @@ import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ImageBackground, Image, Dimensions } from 'react-native';
 import bgImage from '../images/loginbackground.jpg';
 import logo from '../images/reactlogo.png';
+import * as LocalAuthentication from 'expo-local-authentication';
+import { Button } from 'react-native';
+
 const testUser = {username:"admin", password:"admin"};
 const { width: WIDTH } = Dimensions.get('window');
 
 export default class LoginScreen extends React.Component {
+
+  onFaceId = async () => {
+    try{
+      //check if device is compatible
+      const isCompatible = await LocalAuthentication.hasHardwareAsync();
+
+      if (!isCompatible){
+        throw new Error('Your device isn\'t compatible.')
+      }
+
+      //checking if device has biometrics records
+      const isEnrolled = await LocalAuthentication.isEnrolledAsync();
+
+      if (!isEnrolled){
+        throw new Error('No Faces / Fingers found.')
+      }
+
+      await LocalAuthentication.authenticateAsync();
+
+      alert('Authenticated', 'Welcome back !')
+      this.props.navigation.navigate('Menu')
+    } catch (error){
+      alert('An error has occured', error?.message);
+    }
+  };
 
   constructor(props) {
     super(props);
@@ -46,6 +74,7 @@ export default class LoginScreen extends React.Component {
           >
             <Text style={styles.loginText}>Login</Text>
           </TouchableOpacity>
+          <Button title='Face/Touch id' onPress={this.onFaceId}></Button>
       </ImageBackground>
     );
   }
