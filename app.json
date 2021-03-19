@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "e-commerce-app",
+    "scheme":"e-commerce-app",
     "slug": "e-commerce-app",
     "version": "1.0.0",
     "orientation": "portrait",

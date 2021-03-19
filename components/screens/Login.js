@@ -1,7 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, ImageBackground, Image, Dimensions } from 'react-native';
+import { Button,StyleSheet, Text, View, TextInput, TouchableOpacity, ImageBackground, Image, Dimensions } from 'react-native';
 import bgImage from '../images/loginbackground.jpg';
 import logo from '../images/reactlogo.png';
+import * as Linking from 'expo-linking';
+import AsyncStorage from '@react-native-community/async-storage';
+import * as AppAuth from 'expo-app-auth';
+
+const prefix = Linking.makeUrl('/');
 const testUser = {username:"admin", password:"admin"};
 const { width: WIDTH } = Dimensions.get('window');
 
@@ -9,8 +14,20 @@ export default class LoginScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {username:'', password:''}
+    this.state = {username:'',
+                  password:'',
+                  authState: null
+                }
   }
+
+  componentDidMount() {
+    async () => {
+      let cachedAuth = await getCachedAuthAsync();
+      if (cachedAuth && ! this.state.authState) {
+        this.setState({ authState: cachedAuth });
+      }
+    };
+  };
 
   render() {
     return (
@@ -46,6 +63,13 @@ export default class LoginScreen extends React.Component {
           >
             <Text style={styles.loginText}>Login</Text>
           </TouchableOpacity>
+          <Button
+            title="Sign In with Google"
+            onPress={async() => {
+              const _authState = await signInAsync(this.props.navigation);
+              this.setState({ authState:_authState })
+            }}
+          />
       </ImageBackground>
     );
   }
@@ -108,3 +132,50 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   }
 });
+
+let config = {
+  issuer: 'https://accounts.google.com',
+  scopes: ['openid', 'profile'],
+  /* This is the CLIENT_ID generated from a Firebase project */
+  clientId: '603386649315-vp4revvrcgrcjme51ebuhbkbspl048l9.apps.googleusercontent.com',
+};
+
+let StorageKey = '@e-commerce-app:CustomGoogleOAuthKey';
+
+export async function signInAsync(navigation) {
+  let authState = await AppAuth.authAsync(config);
+  console.log(JSON.stringify(authState))
+  await cacheAuthAsync(authState);
+  console.log('signInAsync', authState);
+  navigation.navigate('Menu')
+  return authState;
+}
+
+async function cacheAuthAsync(authState) {
+  return await AsyncStorage.setItem(StorageKey, JSON.stringify(authState));
+}
+
+export async function getCachedAuthAsync() {
+  let value = await AsyncStorage.getItem(StorageKey);
+  let authState = JSON.parse(value);
+  console.log('getCachedAuthAsync', authState);
+  if (authState) {
+    if (checkIfTokenExpired(authState)) {
+      return refreshAuthAsync(authState);
+    } else {
+      return authState;
+    }
+  }
+  return null;
+}
+
+function checkIfTokenExpired({ accessTokenExpirationDate }) {
+  return new Date(accessTokenExpirationDate) < new Date();
+}
+
+async function refreshAuthAsync({ refreshToken }) {
+  let authState = await AppAuth.refreshAsync(config, refreshToken);
+  console.log('refreshAuth', authState);
+  await cacheAuthAsync(authState);
+  return authState;
+}
