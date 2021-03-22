@@ -22,7 +22,6 @@ let StorageKey = '@e-commerce-app:CustomGoogleOAuthKey';
 export async function signInAsync(navigation) {
   let authState = await AppAuth.authAsync(config);
   await cacheAuthAsync(authState);
-  console.log('signInAsync', authState);
   navigation.navigate('Menu')
   return authState;
 }
@@ -31,10 +30,11 @@ async function cacheAuthAsync(authState) {
   return await AsyncStorage.setItem(StorageKey, JSON.stringify(authState));
 }
 
-export async function getCachedAuthAsync() {
+export async function getCachedAuthAsync(navigation) {
   let value = await AsyncStorage.getItem(StorageKey);
   let authState = JSON.parse(value);
   if (authState) {
+    navigation.navigate('Menu');
     if (checkIfTokenExpired(authState)) {
       return refreshAuthAsync(authState);
     } else {
@@ -119,8 +119,9 @@ export default class LoginScreen extends React.Component {
           <Button
             title="Sign In with Google"
             onPress={async() => {
-              const _authState = await signInAsync(this.props.navigation);
-              this.setState({ authState:_authState })
+              let _authState = this.authState;
+              if(!_authState) _authState = await signInAsync(this.props.navigation);
+              if(this._isMounted) this.setState({ authState:_authState })
             }}
           />
       </ImageBackground>
