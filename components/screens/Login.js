@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, ImageBackground, Image, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, ImageBackground, Image, Alert, Dimensions } from 'react-native';
+import * as LocalAuthentication from 'expo-local-authentication';
 import bgImage from '../images/loginbackground.jpg';
 import logo from '../images/reactlogo.png';
 const testUser = {username:"admin", password:"admin"};
@@ -46,16 +47,43 @@ export default class LoginScreen extends React.Component {
           >
             <Text style={styles.loginText}>Login</Text>
           </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.button} 
+            onPress={this.onFaceId}
+          >
+            <Text style={styles.loginText}>Login With FaceID or TouchID</Text>
+          </TouchableOpacity>
       </ImageBackground>
     );
   }
+
   _signin = async () => {
     if(this.state.username===testUser.username && this.state.password===testUser.password) {
-      this.props.navigation.navigate('Menu')
+      this.props.navigation.navigate('Menu');
     } else {
-      alert("Incorrect username or password!")
+      alert("Incorrect username or password!");
     }
-  }
+  };
+  
+  onFaceId = async () => {
+    try {
+      const isCompatible = await LocalAuthentication.hasHardwareAsync();
+      if (!isCompatible) {
+        throw new Error('Device is not compatible.')
+      }
+  
+      const isEnrolled = await LocalAuthentication.isEnrolledAsync();
+      if (!isEnrolled) {
+        throw new Error('No Faces / Fingers found.')
+      }
+  
+      await LocalAuthentication.authenticateAsync();
+      this.props.navigation.navigate('Menu');
+    } catch (error) {
+      Alert.alert('An error as occured', error?.message);
+    }
+  };
 
 }
 
@@ -64,7 +92,6 @@ const styles = StyleSheet.create({
     flex: 1,
     width: null,
     height: null,
-
     alignItems: 'center'
   },
   logoContainer: {
