@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button,StyleSheet, Text, View, TextInput, TouchableOpacity, ImageBackground, Image, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, ImageBackground, Image, Dimensions } from 'react-native';
 import bgImage from '../images/loginbackground.jpg';
 import logo from '../images/reactlogo.png';
 import * as Linking from 'expo-linking';
@@ -116,14 +116,16 @@ export default class LoginScreen extends React.Component {
           >
             <Text style={styles.loginText}>Login</Text>
           </TouchableOpacity>
-          <Button
-            title="Sign In with Google"
+          <TouchableOpacity
+            style={styles.button} 
             onPress={async() => {
               let _authState = this.authState;
               if(!_authState) _authState = await signInAsync(this.props.navigation);
               if(this._isMounted) this.setState({ authState:_authState })
             }}
-          />
+          >
+            <Text style={styles.loginText}>Sign In with Google</Text>
+          </TouchableOpacity>
       </ImageBackground>
     );
   }
