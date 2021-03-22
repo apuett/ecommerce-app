@@ -3,15 +3,85 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, ImageBackground, I
 import * as LocalAuthentication from 'expo-local-authentication';
 import bgImage from '../images/loginbackground.jpg';
 import logo from '../images/reactlogo.png';
+import * as Linking from 'expo-linking';
+import AsyncStorage from '@react-native-community/async-storage';
+import * as AppAuth from 'expo-app-auth';
+
+const prefix = Linking.makeUrl('/');
 const testUser = {username:"admin", password:"admin"};
 const { width: WIDTH } = Dimensions.get('window');
+
+
+let config = {
+  issuer: 'https://accounts.google.com',
+  scopes: ['openid', 'profile'],
+  clientId: '603386649315-vp4revvrcgrcjme51ebuhbkbspl048l9.apps.googleusercontent.com',
+};
+
+let StorageKey = '@e-commerce-app:CustomGoogleOAuthKey';
+
+export async function signInAsync(navigation) {
+  let authState = await AppAuth.authAsync(config);
+  await cacheAuthAsync(authState);
+  navigation.navigate('Menu')
+  return authState;
+}
+
+async function cacheAuthAsync(authState) {
+  return await AsyncStorage.setItem(StorageKey, JSON.stringify(authState));
+}
+
+export async function getCachedAuthAsync(navigation) {
+  let value = await AsyncStorage.getItem(StorageKey);
+  let authState = JSON.parse(value);
+  if (authState) {
+    navigation.navigate('Menu');
+    if (checkIfTokenExpired(authState)) {
+      return refreshAuthAsync(authState);
+    } else {
+      return authState;
+    }
+  }
+  return null;
+}
+
+function checkIfTokenExpired({ accessTokenExpirationDate }) {
+  return new Date(accessTokenExpirationDate) < new Date();
+}
+
+async function refreshAuthAsync({ refreshToken }) {
+  let authState = await AppAuth.refreshAsync(config, refreshToken);
+  await cacheAuthAsync(authState);
+  return authState;
+}
+
 
 export default class LoginScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {username:'', password:''}
+    this._isMounted = false;
+    this.state = {username:'',
+                  password:'',
+                  authState: null
+                }
   }
+
+  componentDidMount() {
+    this._isMounted=true;
+    async () => {
+      let cachedAuth = await getCachedAuthAsync();
+      if (cachedAuth && ! this.state.authState) {
+        if(this._isMounted) {
+          this.setState({ authState: cachedAuth });
+        }
+      }
+    };
+  };
+
+  componentWillUnmount() {
+    this._isMounted = false;
+ }
 
   render() {
     return (
@@ -47,7 +117,16 @@ export default class LoginScreen extends React.Component {
           >
             <Text style={styles.loginText}>Login</Text>
           </TouchableOpacity>
-
+          <TouchableOpacity
+            style={styles.button} 
+            onPress={async() => {
+              let _authState = this.authState;
+              if(!_authState) _authState = await signInAsync(this.props.navigation);
+              if(this._isMounted) this.setState({ authState:_authState })
+            }}
+          >
+            <Text style={styles.loginText}>Sign In with Google</Text>
+          </TouchableOpacity>
           <TouchableOpacity
             style={styles.button} 
             onPress={this.onFaceId}
