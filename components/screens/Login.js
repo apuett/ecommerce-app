@@ -10,10 +10,56 @@ const prefix = Linking.makeUrl('/');
 const testUser = {username:"admin", password:"admin"};
 const { width: WIDTH } = Dimensions.get('window');
 
+
+let config = {
+  issuer: 'https://accounts.google.com',
+  scopes: ['openid', 'profile'],
+  clientId: '603386649315-vp4revvrcgrcjme51ebuhbkbspl048l9.apps.googleusercontent.com',
+};
+
+let StorageKey = '@e-commerce-app:CustomGoogleOAuthKey';
+
+export async function signInAsync(navigation) {
+  let authState = await AppAuth.authAsync(config);
+  await cacheAuthAsync(authState);
+  console.log('signInAsync', authState);
+  navigation.navigate('Menu')
+  return authState;
+}
+
+async function cacheAuthAsync(authState) {
+  return await AsyncStorage.setItem(StorageKey, JSON.stringify(authState));
+}
+
+export async function getCachedAuthAsync() {
+  let value = await AsyncStorage.getItem(StorageKey);
+  let authState = JSON.parse(value);
+  if (authState) {
+    if (checkIfTokenExpired(authState)) {
+      return refreshAuthAsync(authState);
+    } else {
+      return authState;
+    }
+  }
+  return null;
+}
+
+function checkIfTokenExpired({ accessTokenExpirationDate }) {
+  return new Date(accessTokenExpirationDate) < new Date();
+}
+
+async function refreshAuthAsync({ refreshToken }) {
+  let authState = await AppAuth.refreshAsync(config, refreshToken);
+  await cacheAuthAsync(authState);
+  return authState;
+}
+
+
 export default class LoginScreen extends React.Component {
 
   constructor(props) {
     super(props);
+    this._isMounted = false;
     this.state = {username:'',
                   password:'',
                   authState: null
@@ -21,13 +67,20 @@ export default class LoginScreen extends React.Component {
   }
 
   componentDidMount() {
+    this._isMounted=true;
     async () => {
       let cachedAuth = await getCachedAuthAsync();
       if (cachedAuth && ! this.state.authState) {
-        this.setState({ authState: cachedAuth });
+        if(this._isMounted) {
+          this.setState({ authState: cachedAuth });
+        }
       }
     };
   };
+
+  componentWillUnmount() {
+    this._isMounted = false;
+ }
 
   render() {
     return (
@@ -132,50 +185,3 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   }
 });
-
-let config = {
-  issuer: 'https://accounts.google.com',
-  scopes: ['openid', 'profile'],
-  /* This is the CLIENT_ID generated from a Firebase project */
-  clientId: '603386649315-vp4revvrcgrcjme51ebuhbkbspl048l9.apps.googleusercontent.com',
-};
-
-let StorageKey = '@e-commerce-app:CustomGoogleOAuthKey';
-
-export async function signInAsync(navigation) {
-  let authState = await AppAuth.authAsync(config);
-  console.log(JSON.stringify(authState))
-  await cacheAuthAsync(authState);
-  console.log('signInAsync', authState);
-  navigation.navigate('Menu')
-  return authState;
-}
-
-async function cacheAuthAsync(authState) {
-  return await AsyncStorage.setItem(StorageKey, JSON.stringify(authState));
-}
-
-export async function getCachedAuthAsync() {
-  let value = await AsyncStorage.getItem(StorageKey);
-  let authState = JSON.parse(value);
-  console.log('getCachedAuthAsync', authState);
-  if (authState) {
-    if (checkIfTokenExpired(authState)) {
-      return refreshAuthAsync(authState);
-    } else {
-      return authState;
-    }
-  }
-  return null;
-}
-
-function checkIfTokenExpired({ accessTokenExpirationDate }) {
-  return new Date(accessTokenExpirationDate) < new Date();
-}
-
-async function refreshAuthAsync({ refreshToken }) {
-  let authState = await AppAuth.refreshAsync(config, refreshToken);
-  console.log('refreshAuth', authState);
-  await cacheAuthAsync(authState);
-  return authState;
-}
