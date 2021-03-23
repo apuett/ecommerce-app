@@ -6,6 +6,10 @@ import { connect } from 'react-redux';
 import NavBar from '../NavBar';
 
 class ProductDetails extends React.Component {
+    static navigationOptions = {
+        headerTitle: 'Product Details'
+      }
+
     render() {
         return (
             <View style={styles.container}>

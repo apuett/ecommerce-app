@@ -4,6 +4,11 @@ import { connect } from 'react-redux';
 import NavBar from '../NavBar';
 
 class WishList extends React.Component {
+
+    static navigationOptions = {
+        headerTitle: 'Wish List'
+      }
+
     renderProducts = (products) => {
         return products.map((element, index) => {
             return (

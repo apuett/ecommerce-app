@@ -54,8 +54,11 @@ async function refreshAuthAsync({ refreshToken }) {
   return authState;
 }
 
-
 export default class LoginScreen extends React.Component {
+
+  static navigationOptions = {
+    headerShown: false
+  }
 
   constructor(props) {
     super(props);

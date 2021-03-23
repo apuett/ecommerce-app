@@ -5,6 +5,10 @@ import NavBar from '../NavBar';
 
 class ShoppingCart extends React.Component {
 
+    static navigationOptions = {
+        headerTitle: 'Shopping Cart'
+      }
+
     renderProducts = (products) => {
         return products.map((element, index) => {
             return (

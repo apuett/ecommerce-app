@@ -6,6 +6,11 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { products } from '../ProductContext';
 
 class Menu extends React.Component {
+
+    static navigationOptions = {
+        headerTitle: 'Menu'
+      }
+
 	render() {
 		return (
 		<View style={styles.container}>
