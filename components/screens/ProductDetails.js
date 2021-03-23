@@ -2,67 +2,57 @@ import React from 'react';
 import { View, StyleSheet, Text, Image, Alert } from 'react-native';
 import { Card } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { connect } from 'react-redux';
 import NavBar from '../NavBar';
 
-export default function ProductDetails({ screenProps, navigation }) {
-
-
-    const handleWishListPress = () => {
-        const updatedList = screenProps.wishList;
-        updatedList.push({
-                        key: navigation.getParam('key'),
-                        name: navigation.getParam('name'),
-                        price: navigation.getParam('price'),
-                        description: navigation.getParam('description'),
-                        image: navigation.getParam('image')
-                            });
-        screenProps.wishListButtonPress(updatedList);
-
-        Alert.alert("Commerce", "Added to wish list");
-    };
-
-    const handleShoppingCartPress = () => {
-        const updatedList = screenProps.shoppingCart;
-        updatedList.push({
-                        key: navigation.getParam('key'),
-                        name: navigation.getParam('name'),
-                        price: navigation.getParam('price'),
-                        description: navigation.getParam('description'),
-                        image: navigation.getParam('image')
-                            });
-        screenProps.shoppingCartButtonPress(updatedList);
-
-        Alert.alert("Commerce", "Added to Cart");
-    };
-
-    return(
-        <View style={styles.container}>
-            <Card> 
-                <View style={styles.cardcontainer}>
-                <Image style={styles.image} source={navigation.getParam('image')} />
-                    <View style={styles.textcontainer}>
-                        <Text style={styles.name}>{navigation.getParam('name')}</Text>
-                        <Text style={styles.price}>${navigation.getParam('price')}</Text>
-                        <Text style={styles.description}>{navigation.getParam('description')}</Text>
-                    </View>
-
-                        <View style={styles.buttoncontainer}>
-                            <TouchableOpacity style={styles.button} onPress={handleShoppingCartPress}>
-                                <Text style={styles.buttonText}>Add to Cart</Text>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity style={styles.button} onPress={handleWishListPress}>
-                                <Text style={styles.buttonText}>Add to Wish List</Text>
-                            </TouchableOpacity>
+class ProductDetails extends React.Component {
+    render() {
+        return (
+            <View style={styles.container}>
+                <Card> 
+                    <View style={styles.cardcontainer}>
+                    <Image style={styles.image} source={this.props.navigation.getParam('image')} />
+                        <View style={styles.textcontainer}>
+                            <Text style={styles.name}>{this.props.navigation.getParam('name')}</Text>
+                            <Text style={styles.price}>${this.props.navigation.getParam('price')}</Text>
+                            <Text style={styles.description}>{this.props.navigation.getParam('description')}</Text>
                         </View>
+    
+                            <View style={styles.buttoncontainer}>
+                                <TouchableOpacity style={styles.button} onPress={() => {
+                                this.props.addItemToCart([
+                                    this.props.navigation.getParam('key'),
+                                    this.props.navigation.getParam('image'),
+                                    this.props.navigation.getParam('name'),
+                                    this.props.navigation.getParam('price'),
+                                    this.props.navigation.getParam('description')
+                                ]); 
+                                    Alert.alert("Commerce", "Added to Cart");
+                                }}>
+                                    <Text style={styles.buttonText}>Add to Cart</Text>
+                                </TouchableOpacity>
+    
+                                <TouchableOpacity style={styles.button}>
+                                    <Text style={styles.buttonText}>Add to Wish List</Text>
+                                </TouchableOpacity>
+                            </View>
+                    </View>
+                </Card>
+                <View style={styles.navbarcontainer}>
+                    <NavBar navigation={this.props.navigation}></NavBar>
                 </View>
-            </Card>
-            <View style={styles.navbarcontainer}>
-                <NavBar navigation={navigation}></NavBar>
             </View>
-        </View>
-    );
+        );
+    }
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addItemToCart: ([key, image, name, price, description]) => dispatch({type:'ADD_TO_CART', payload: ([key, image, name, price, description])})
+    }
+}
+
+export default connect(null, mapDispatchToProps)(ProductDetails);
 
 const styles = StyleSheet.create({
     container: {

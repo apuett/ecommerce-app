@@ -11,7 +11,6 @@ const prefix = Linking.makeUrl('/');
 const testUser = {username:"admin", password:"admin"};
 const { width: WIDTH } = Dimensions.get('window');
 
-
 let config = {
   issuer: 'https://accounts.google.com',
   scopes: ['openid', 'profile'],
