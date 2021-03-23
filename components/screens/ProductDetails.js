@@ -32,7 +32,16 @@ class ProductDetails extends React.Component {
                                     <Text style={styles.buttonText}>Add to Cart</Text>
                                 </TouchableOpacity>
     
-                                <TouchableOpacity style={styles.button}>
+                                <TouchableOpacity style={styles.button} onPress={() => {
+                                this.props.addItemToWishList([
+                                    this.props.navigation.getParam('key'),
+                                    this.props.navigation.getParam('image'),
+                                    this.props.navigation.getParam('name'),
+                                    this.props.navigation.getParam('price'),
+                                    this.props.navigation.getParam('description')
+                                ]);
+                                    Alert.alert("Commerce", "Added to Wish List");
+                                }}>
                                     <Text style={styles.buttonText}>Add to Wish List</Text>
                                 </TouchableOpacity>
                             </View>
@@ -48,7 +57,8 @@ class ProductDetails extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addItemToCart: ([key, image, name, price, description]) => dispatch({type:'ADD_TO_CART', payload: ([key, image, name, price, description])})
+        addItemToCart: ([key, image, name, price, description]) => dispatch({type:'ADD_TO_CART', payload: ([key, image, name, price, description])}),
+        addItemToWishList: ([key, image, name, price, description]) => dispatch({type:'ADD_TO_WISHLIST', payload: ([key, image, name, price, description])})
     }
 }
 
