@@ -17,6 +17,7 @@ const ShoppingCartItems = (state = initialState, action) => {
             }
         case 'CLEAR_CART':
             return {
+                ...state,
                 ShoppingCart: []
             }   
         case 'ADD_TO_WISHLIST':

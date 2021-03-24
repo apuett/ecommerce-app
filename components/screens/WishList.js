@@ -16,8 +16,8 @@ class WishList extends React.Component {
                     <Image style={styles.product_image} source={element[1]} />
                     <Text style={styles.product_name}>{element[2]}</Text>
                     <Button title='Add to Cart' onPress={() => {
-                        this.props.addItemToCart([element[0], element[1], element[2], element[3], element[4]]);
                         this.props.removeItemFromWishList(index);
+                        this.props.addItemToCart([element[0], element[1], element[2], element[3], element[4]]);
                         Alert.alert("Commerce", "Added to cart!");
                     }}></Button>
                     <Button title='Remove' onPress={() => this.props.removeItemFromWishList(index)}></Button>
