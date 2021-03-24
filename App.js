@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { createAppContainer,createSwitchNavigator  } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
@@ -8,7 +8,7 @@ import Product from './components/screens/Product';
 import ProductDetails from './components/screens/ProductDetails';
 import ShoppingCart from './components/screens/ShoppingCart';
 import WishList from './components/screens/WishList';
-import {products} from './components/ProductContext';
+import images from './components/ProductContext';
 
 
 const AppNavigator = createStackNavigator({
@@ -69,7 +69,19 @@ const AppContainer = createAppContainer(MainNavigator);
 
 export default function App() {
 
-  const [productContext] = useState(products);
+  const [productContext,setProductContext] = useState([]);
+
+  useEffect(()=>{
+    fetch("http://1458b3b2144a.ngrok.io/app/product-context")
+    .then(res=>res.json())
+    .then(results=>{
+      results.forEach(element => {
+        element.image = images[element.image_path]
+        element.price = parseFloat(element.price)
+      })
+      setProductContext(results)
+    })
+  },[])
 
   const [wishList, setWishList] = useState([]);
   const wishListButtonPress = (updatedList) => {
