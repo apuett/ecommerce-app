@@ -72,7 +72,7 @@ export default function App() {
   const [productContext,setProductContext] = useState([]);
 
   useEffect(()=>{
-    fetch("http://1458b3b2144a.ngrok.io/app/product-context")
+    fetch("https://dry-bayou-88775.herokuapp.com/app/product-context")
     .then(res=>res.json())
     .then(results=>{
       results.forEach(element => {
