@@ -7,6 +7,9 @@
     "test": "nodemon server.js",
     "start": "nodemon server.js"
   },
+  "engines": {
+    "node": "14.15.3"
+  },
   "author": "Andrew",
   "license": "ISC",
   "dependencies": {

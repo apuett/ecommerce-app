@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Product = require('./ProductModels')
 
-router.post('/pp',(request,response)=>{
+router.post('/post-product',(request,response)=>{
     const addedProduct = new Product({
         key: request.body.key,
         name: request.body.name,
