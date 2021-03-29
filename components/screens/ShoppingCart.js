@@ -1,65 +1,66 @@
-import React, { useState } from 'react';
-import { View, ScrollView, Text, StyleSheet, Image, Alert, Button } from 'react-native';
+import React from 'react';
+import { View, ScrollView, Text, StyleSheet, Image, Button, Alert } from 'react-native';
+import { connect } from 'react-redux'
 import NavBar from '../NavBar';
 
-function ShoppingCart({ screenProps, navigation }) {
+class ShoppingCart extends React.Component {
 
-    let totalPrice = 0;
+    static navigationOptions = {
+        headerTitle: 'Shopping Cart'
+      }
 
-    const createList = (shoppingCart) => {
-        return shoppingCart.map((element, index) => {
-            totalPrice += element.price;
+    renderProducts = (products) => {
+        return products.map((element, index) => {
             return (
                 <View style={styles.product_container} key={index}>
-                    <Image style={styles.product_image} source={element.image} />
-                    <Text style={styles.product_name}>{element.name}</Text>
-                    <Text style={styles.product_price}>${element.price}</Text>
-                    <Button title='Remove' onPress={()=>removeShoppingCartItem(element.key)}></Button>
+                    <Image style={styles.product_image} source={element[1]} />
+                    <Text style={styles.product_name}>{element[2]}</Text>
+                    <Text style={styles.product_price}>${element[3]}</Text>
+                    <Button title='Remove' onPress={() => this.props.removeItemFromCart(index)}></Button>
                 </View>
             );
         });
-    };
-
-    const [list, setList] = useState(createList(screenProps.shoppingCart));
-
-    const removeShoppingCartItem = (itemKey) =>{
-        
-        shoppingCart = screenProps.shoppingCart;
-        
-        for(let index = 0; index < shoppingCart.length; index++){
-            if(shoppingCart[index].key == itemKey){
-                shoppingCart.splice(index,1);
-                break;
-            }
-        }
-
-        screenProps.shoppingCartButtonPress(shoppingCart);
-        setList(createList(shoppingCart))
-    };
-
-    const clearList = () => {
-        screenProps.shoppingCart.length = 0;
-        screenProps.shoppingCartButtonPress(screenProps.shoppingCart);
-        setList(createList(screenProps.shoppingCart));
-
-        Alert.alert("Commerce", "Items purchased!");
     }
 
-    return (
-        <View style={styles.container}>
-            <ScrollView>
-                <View>
-                    {list}
-                    <Text style={styles.total_price}>Total: ${totalPrice}</Text>
-                    <Button title='Purchase' onPress={()=> {
-                        clearList();
-                    }}></Button>
-                </View>
-            </ScrollView>
-            <NavBar navigation={navigation}></NavBar>
-        </View>
-    )
+    render() {
+        let totalPrice = 0;
+
+        for(let i = 0; i < this.props.cartItems.length; i++) {
+            totalPrice += this.props.cartItems[i][3];
+        }
+
+        return (
+            <View style={styles.container}>
+                <ScrollView>
+                    <View>
+                        {this.renderProducts(this.props.cartItems)}
+                        <Text style={styles.total_price}>Total: ${totalPrice}</Text>
+                        <Button title='Purchase' onPress={()=> {
+                            this.props.clearCart();     
+                            Alert.alert("Commerce", "Items purchased!");
+                        }}></Button>
+                    </View>
+                </ScrollView>
+                <NavBar navigation={this.props.navigation}></NavBar>
+            </View>
+        );
+    }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        cartItems: state.ShoppingCart
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        removeItemFromCart: (index) => dispatch({ type: 'REMOVE_FROM_CART', payload: index }),
+        clearCart: () => dispatch({ type: 'CLEAR_CART' })
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShoppingCart);
 
 const styles = StyleSheet.create({
     container: {        
@@ -94,5 +95,3 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
   });
-
-export default ShoppingCart;

@@ -1,61 +1,57 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, ScrollView, Text, StyleSheet, Image, Alert, Button } from 'react-native';
+import { connect } from 'react-redux';
 import NavBar from '../NavBar';
 
-function WishList({ screenProps, navigation }) {
+class WishList extends React.Component {
 
-    const [wishList, setWishList] = useState(screenProps.wishList); 
-    const [shoppingCart] = useState(screenProps.shoppingCart); 
+    static navigationOptions = {
+        headerTitle: 'Wish List'
+      }
 
-    const createList = (wishList) => {
-        return wishList.map((element, index) => {
+    renderProducts = (products) => {
+        return products.map((element, index) => {
             return (
                 <View style={styles.product_container} key={index}>
-                    <Image style={styles.product_image} source={element.image} />
-                    <Text style={styles.product_name}>{element.name}</Text>
-                    <Button title='Add to Cart' onPress={()=>addToCart(element.key, element.name, element.price, element.description, element.image)}></Button>
-                    <Button title='Remove' onPress={()=>removeWishListItem(element.key)}></Button>
+                    <Image style={styles.product_image} source={element[1]} />
+                    <Text style={styles.product_name}>{element[2]}</Text>
+                    <Button title='Add to Cart' onPress={() => {
+                        this.props.removeItemFromWishList(index);
+                        this.props.addItemToCart([element[0], element[1], element[2], element[3], element[4]]);
+                        Alert.alert("Commerce", "Added to cart!");
+                    }}></Button>
+                    <Button title='Remove' onPress={() => this.props.removeItemFromWishList(index)}></Button>
                 </View>
             );
         });
-    };
-
-    const [list, setList] = useState(createList(screenProps.wishList));
-
-    const removeWishListItem = (itemKey) =>{
-
-        let wishList = screenProps.wishList;
-
-        for (let index=0;index<wishList.length;index++){
-            if (wishList[index].key == itemKey){
-                wishList.splice(index,1);
-                break;
-            };
-        };
-        screenProps.wishListButtonPress(wishList);
-        setList(createList(wishList))
     }
 
-    const addToCart = (key, name, price, description, image) => {
-        shoppingCart.push({           
-            name: name,
-            price: price,
-            description: description,
-            image: image
-        });
-        removeWishListItem(key);
-        Alert.alert("Commerce", "Added to cart!");
-    };
-
-    return (
-        <View style={styles.container}>
-            <ScrollView>
-                {list}
-            </ScrollView>
-            <NavBar navigation={navigation}></NavBar>
-        </View>
-    )
+    render() {
+        return(
+            <View style={styles.container}>
+                <ScrollView>
+                    {this.renderProducts(this.props.wishListItems)}
+                </ScrollView>
+                <NavBar navigation={this.props.navigation}></NavBar>
+            </View>
+        );
+    }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        wishListItems: state.WishList
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        removeItemFromWishList: (index) => dispatch({ type: 'REMOVE_FROM_WISHLIST', payload: index }),
+        addItemToCart: ([key, image, name, price, description]) => dispatch({type:'ADD_TO_CART', payload: ([key, image, name, price, description])})
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(WishList);
 
 const styles = StyleSheet.create({
     container: {        
@@ -90,6 +86,3 @@ const styles = StyleSheet.create({
         fontSize: 23,
     },
   });
-
-  export default WishList;
-
