@@ -34,7 +34,7 @@ class Menu extends React.Component {
 				<View style={styles.row}>
 					<View style={styles.col}>
 					<FlatList
-						data={this.products}
+						data={this.state.products}
 						renderItem={({ item }) => (
 						<TouchableOpacity onPress={() => this.props.navigation.navigate('ProductDetails', item)}>
 							<Product 
