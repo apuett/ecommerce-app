@@ -3,13 +3,30 @@ import { StyleSheet, View, FlatList } from 'react-native';
 import Product from '../screens/Product';
 import NavBar from '../NavBar';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { products } from '../ProductContext';
+import images from '../ProductContext';
 
 class Menu extends React.Component {
 
+	constructor(props){
+		super(props)
+		this.state = { products : []}
+	}
+	
     static navigationOptions = {
         headerTitle: 'Menu'
       }
+
+	componentDidMount(){
+		fetch("https://dry-bayou-88775.herokuapp.com/app/product-context")
+    	.then(res=>res.json())
+    	.then(results=>{
+      		results.forEach(element => {
+        		element.image = images[element.image_path]
+        		element.price = parseFloat(element.price)
+      	})
+      	this.setState( {products : results} )
+    	})
+	}
 
 	render() {
 		return (
@@ -17,7 +34,7 @@ class Menu extends React.Component {
 				<View style={styles.row}>
 					<View style={styles.col}>
 					<FlatList
-						data={products}
+						data={this.products}
 						renderItem={({ item }) => (
 						<TouchableOpacity onPress={() => this.props.navigation.navigate('ProductDetails', item)}>
 							<Product 
