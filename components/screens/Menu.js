@@ -1,8 +1,9 @@
 import React from 'react'
 import { StyleSheet, View, FlatList } from 'react-native';
-import Product from '../screens/Product';
-import NavBar from '../NavBar';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import Product from '../screens/Product';
+import ChatIcon from '../ChatIcon'
+import NavBar from '../NavBar';
 import images from '../ProductContext';
 
 class Menu extends React.Component {
@@ -13,8 +14,11 @@ class Menu extends React.Component {
 	}
 	
     static navigationOptions = {
-        headerTitle: 'Menu'
-      }
+		headerTitle: 'Menu',
+		headerRight: () => (
+			<ChatIcon />
+		),
+    }
 
 	componentDidMount(){
 		fetch("https://dry-bayou-88775.herokuapp.com/app/product-context")
@@ -30,27 +34,27 @@ class Menu extends React.Component {
 
 	render() {
 		return (
-		<View style={styles.container}>
-				<View style={styles.row}>
-					<View style={styles.col}>
-					<FlatList
-						data={this.state.products}
-						renderItem={({ item }) => (
-						<TouchableOpacity onPress={() => this.props.navigation.navigate('ProductDetails', item)}>
-							<Product 
-							name={item.name} 
-							price={item.price}
-							description={item.description}
-							image={item.image}
-							/>
-						</TouchableOpacity>
-						)}
-						keyExtractor={(item, index) => index.toString()}
-					/>
+			<View style={styles.container}>
+					<View style={styles.row}>
+						<View style={styles.col}>
+						<FlatList
+							data={this.state.products}
+							renderItem={({ item }) => (
+							<TouchableOpacity onPress={() => this.props.navigation.navigate('ProductDetails', item)}>
+								<Product 
+								name={item.name} 
+								price={item.price}
+								description={item.description}
+								image={item.image}
+								/>
+							</TouchableOpacity>
+							)}
+							keyExtractor={(item, index) => index.toString()}
+						/>
+						</View>
 					</View>
-				</View>
-			<NavBar navigation={this.props.navigation}></NavBar>
-		</View>
+				<NavBar navigation={this.props.navigation}></NavBar>
+			</View>
 		);
 	}
 }
