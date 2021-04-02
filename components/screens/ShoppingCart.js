@@ -6,7 +6,7 @@ import NavBar from '../NavBar';
 class ShoppingCart extends React.Component {
 
     static navigationOptions = {
-        headerTitle: 'Shopping Cart'
+        headerTitle: 'Cart'
       }
 
     renderProducts = (products) => {
@@ -35,9 +35,9 @@ class ShoppingCart extends React.Component {
                     <View>
                         {this.renderProducts(this.props.cartItems)}
                         <Text style={styles.total_price}>Total: ${totalPrice}</Text>
-                        <Button title='Purchase' onPress={()=> {
-                            this.props.clearCart();     
-                            Alert.alert("Commerce", "Items purchased!");
+                        <Button title='Checkout' onPress={()=> {
+                            // this.props.clearCart();     
+                            this.props.navigation.push('CheckOut')
                         }}></Button>
                     </View>
                 </ScrollView>
