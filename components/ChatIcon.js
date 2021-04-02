@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 
 const ChatIcon = (props) => (
     <View>
-        <TouchableOpacity onPress={() => props.navigation.navigate('ChatBot')} >
+        <TouchableOpacity onPress={() => props.navigation.navigate('ChatBotScreen')} >
 		    <Text>ChatBot</Text>
 		</TouchableOpacity>
     </View>

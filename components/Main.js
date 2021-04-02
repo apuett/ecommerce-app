@@ -6,7 +6,7 @@ import Product from './screens/Product';
 import ProductDetails from './screens/ProductDetails';
 import ShoppingCart from './screens/ShoppingCart';
 import WishList from './screens/WishList';
-import ChatBot from './screens/ChatBot';
+import ChatBotScreen from './screens/ChatBotScreen';
 
 const AppStackNavigator = createStackNavigator({
     Login: Login,
@@ -15,7 +15,7 @@ const AppStackNavigator = createStackNavigator({
     ProductDetails: ProductDetails,
     ShoppingCart: ShoppingCart,
     WishList: WishList,
-    ChatBot: ChatBot,
+    ChatBotScreen: ChatBotScreen,
   });
 
   const Main = createAppContainer(AppStackNavigator);

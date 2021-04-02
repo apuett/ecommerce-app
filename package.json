@@ -26,6 +26,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
     "react-native-async-storage": "0.0.1",
     "react-native-chatbot": "0.0.1-alpha.12",
+    "react-native-chatbot-expo": "git+https://github.com/jzarca01/react-native-chatbot-expo.git",
     "react-native-elements": "^3.3.2",
     "react-native-gesture-handler": "~1.8.0",
     "react-native-reanimated": "~1.13.0",
@@ -37,7 +38,8 @@
     "react-navigation": "^4.4.4",
     "react-navigation-stack": "^2.10.4",
     "react-redux": "^7.2.3",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "styled-components": "^5.2.3"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
