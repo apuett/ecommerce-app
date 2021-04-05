@@ -22,7 +22,9 @@ export default class CheckOut extends Component {
                         dropDownStyle={{backgroundColor: '#fafafa'}}
                     />
                     <View style={styles.button_container}>
-                        <TouchableOpacity style={styles.button}>
+                        <TouchableOpacity 
+                        style={styles.button}
+                        onPress={()=>{this.props.navigation.push('AddCreditCard')}}>
                             <Text style={styles.buttonText}>Add Credit Card</Text>
                         </TouchableOpacity>
                     </View>
@@ -38,7 +40,9 @@ export default class CheckOut extends Component {
                         dropDownStyle={{backgroundColor: '#fafafa'}}
                     />
                     <View style={styles.button_container}>
-                        <TouchableOpacity style={styles.button}>
+                        <TouchableOpacity 
+                        style={styles.button}
+                        onPress={()=>{this.props.navigation.push('AddAddress')}}>
                             <Text style={styles.buttonText}>Add Address</Text>
                         </TouchableOpacity>
                     </View>

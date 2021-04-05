@@ -35,8 +35,7 @@ class ShoppingCart extends React.Component {
                     <View>
                         {this.renderProducts(this.props.cartItems)}
                         <Text style={styles.total_price}>Total: ${totalPrice}</Text>
-                        <Button title='Checkout' onPress={()=> {
-                            // this.props.clearCart();     
+                        <Button title='Checkout' onPress={()=> { 
                             this.props.navigation.push('CheckOut')
                         }}></Button>
                     </View>
