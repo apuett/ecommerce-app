@@ -16,7 +16,9 @@ class Menu extends React.Component {
     static navigationOptions = {
 		headerTitle: 'Menu',
 		headerRight: () => (
-			<ChatIcon />
+			<View style={{paddingRight: 30}}>
+				<ChatIcon />
+			</View>
 		),
     }
 
