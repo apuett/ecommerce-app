@@ -1,12 +1,51 @@
 import React, { Component } from 'react'
+import { Alert } from 'react-native';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Dimensions  } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker';
+import { connect } from 'react-redux';
 
-export default class CheckOut extends Component {
+class CheckOut extends Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            addressValue: null,
+            cardValue: null,
+            cardItems: [],
+            addressItems: []
+        }
+    
+        this.controller;
+    }
 
     static navigationOptions = {
         headerTitle: 'Check Out'
       }
+
+    componentDidUpdate(){
+        if(this.props.creditCards.length != this.state.cardItems.length){
+            tempCardItems = []
+            this.props.creditCards.forEach(card => {
+                tempCardItems.push({label:card[0] + '  XXXX-XXXX-XXXX-'+card[1].substr(card[1].length-4), value:card})
+            })
+            this.setState({cardItems: tempCardItems})
+        }
+        if(this.props.addresses.length != this.state.addressItems.length){
+            tempAddressItems = []
+            this.props.addresses.forEach(add =>{
+                tempAddressItems.push({label:add[0] + add[1] + ', ' + add[2] + ', ' + add[3] + ' ' + add[4], value:add})
+            })
+            this.setState({addressItems: tempAddressItems})
+        }
+    }
+
+    handleCheckOutButtonPress(){
+        if(this.state.addressValue != null && this.state.cardValue!=null ){
+            console.log('checkout')
+        }else{
+            Alert.alert('Required','Missing Address or Credit Card')
+        }
+    }
 
     render() {
         return (
@@ -14,12 +53,17 @@ export default class CheckOut extends Component {
                 <Text style={styles.headerText}>Credit Card:</Text>
                 <View style={styles.section_container}>
                     <DropDownPicker
+                        items = {this.state.cardItems}
+                        controller={instance => this.controller = instance}
                         containerStyle={{height: 40}}
                         style={{backgroundColor: '#fafafa'}}
                         itemStyle={{
                             justifyContent: 'flex-start'
                         }}
                         dropDownStyle={{backgroundColor: '#fafafa'}}
+                        onChangeItem={item =>this.setState({
+                            cardValue: item.value
+                        })}
                     />
                     <View style={styles.button_container}>
                         <TouchableOpacity 
@@ -32,12 +76,17 @@ export default class CheckOut extends Component {
                 <Text style={styles.headerText}>Address:</Text>
                 <View style={styles.section_container}>
                     <DropDownPicker
+                        items = {this.state.addressItems}
+                        controller={instance => this.controller = instance}
                         containerStyle={{height: 40}}
                         style={{backgroundColor: '#fafafa'}}
                         itemStyle={{
                             justifyContent: 'flex-start'
                         }}
                         dropDownStyle={{backgroundColor: '#fafafa'}}
+                        onChangeItem={item =>this.setState({
+                            addressValue: item.value
+                        })}
                     />
                     <View style={styles.button_container}>
                         <TouchableOpacity 
@@ -70,7 +119,9 @@ export default class CheckOut extends Component {
                     </View>
                 </View>
                 <View style={styles.button_container}>
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity 
+                    style={styles.button}
+                    onPress={()=>this.handleCheckOutButtonPress()}>
                         <Text style={styles.buttonText}>CheckOut</Text>
                     </TouchableOpacity>
                 </View>
@@ -78,6 +129,15 @@ export default class CheckOut extends Component {
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        creditCards: state.CreditCards,
+        addresses: state.Addresses
+    }
+}
+
+export default connect(mapStateToProps, null)(CheckOut);
 
 const { width: WIDTH } = Dimensions.get('window');
 

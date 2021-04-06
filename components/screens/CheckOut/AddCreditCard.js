@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { StyleSheet,View,Text, TouchableOpacity, TextInput,Dimensions } from 'react-native'
+import { StyleSheet,View,Text, TouchableOpacity, TextInput,Dimensions,Alert } from 'react-native'
+import { connect } from 'react-redux';
 
 
 
-export default class AddCreditCard extends Component {
+class AddCreditCard extends Component {
 
     constructor(props){
 		super(props)
@@ -86,6 +87,28 @@ export default class AddCreditCard extends Component {
 
     }
 
+    handleAddCardPress(){
+        const state=this.state
+        if(state.creditCardNum != '' && state.expDate != '' && state.holderName != '' && state.cardCVV != ''){
+            if(state.creditCardNum.length == 19){
+                if(state.expDate.length == 5){
+                    if(state.cardCVV.length == 3){
+                        this.props.addItemToCards([state.holderName, state.creditCardNum, state.expDate, state.cardCVV])
+                        this.props.navigation.navigate('CheckOut')
+                    }else{
+                        Alert.alert('CVV','Insufficient CVV')
+                    }
+                }else{
+                    Alert.alert('Exp. Date','Insufficient Expirary Date')
+                }
+            }else{
+                Alert.alert('Card Number','Insufficient Card Number')
+            }
+        }else{
+            Alert.alert('Required','Missing one or more required fields')
+        }
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -128,7 +151,9 @@ export default class AddCreditCard extends Component {
                     </View>
                 </View>
                 <View style={styles.button_container}>
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity 
+                    style={styles.button}
+                    onPress={()=>this.handleAddCardPress()}>
                         <Text style={styles.buttonText}>Add Credit Card</Text>
                     </TouchableOpacity>
                 </View>
@@ -136,6 +161,14 @@ export default class AddCreditCard extends Component {
         )
     }
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addItemToCards: ([holderName, cardNumber, expDate, cvv]) => dispatch({type:'ADD_CREDIT_CARD', payload: ([holderName, cardNumber, expDate, cvv])}),
+    }
+}
+
+export default connect(null, mapDispatchToProps)(AddCreditCard);
 
 const { width: WIDTH } = Dimensions.get('window');
 

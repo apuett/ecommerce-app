@@ -1,6 +1,8 @@
 const initialState = {
     ShoppingCart: [],
-    WishList: []
+    WishList: [],
+    CreditCards: [],
+    Addresses: []
 }
 
 const ShoppingCartItems = (state = initialState, action) => {
@@ -29,6 +31,16 @@ const ShoppingCartItems = (state = initialState, action) => {
             return {
                 ...state,
                 WishList: [...state.WishList.slice(0, action.payload), ...state.WishList.slice(action.payload + 1)]
+            }
+        case 'ADD_CREDIT_CARD':
+            return {
+                ...state,
+                CreditCards: [...state.CreditCards, action.payload]
+            }
+        case 'ADD_ADDRESS':
+            return {
+                ...state,
+                Addresses: [...state.Addresses, action.payload]
             }
     }
     return state;

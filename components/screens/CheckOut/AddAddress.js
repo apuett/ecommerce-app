@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { StyleSheet,View,Text, TouchableOpacity, TextInput,Dimensions } from 'react-native'
+import { StyleSheet,View,Text, TouchableOpacity, TextInput,Dimensions,Alert } from 'react-native'
+import { connect } from 'react-redux';
 
-export default class AddAddress extends Component {
+class AddAddress extends Component {
 
     constructor(props){
         super(props)
@@ -33,6 +34,21 @@ export default class AddAddress extends Component {
                 this.setState({zipCode: txt})
             }
         }
+    }
+
+    handleAddAddressPress(){
+        const state=this.state
+        if(state.addressLine1!='' && state.city!='' && state.stateInit!='' && state.zipCode!=''){
+            if(state.zipCode.length==5){
+                this.props.addItemToAddresses([state.addressLine1, state.addressLine2, state.city, state.stateInit, state.zipCode])
+                this.props.navigation.navigate('CheckOut')
+            }else{
+                Alert.alert('Zip Code','Insufficient Zip Code')
+            }
+        }else{
+            Alert.alert('Required','Missing one or more required fields')
+        }
+    
     }
 
     render() {
@@ -86,7 +102,9 @@ export default class AddAddress extends Component {
                     </View>
                 </View>
                 <View style={styles.button_container}>
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity 
+                    style={styles.button}
+                    onPress={()=>this.handleAddAddressPress()}>
                         <Text style={styles.buttonText}>Add Address</Text>
                     </TouchableOpacity>
                 </View>
@@ -95,6 +113,14 @@ export default class AddAddress extends Component {
         )
     }
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addItemToAddresses: ([addLine1, addLine2, city, stateIn, zip]) => dispatch({type:'ADD_ADDRESS', payload: ([addLine1, addLine2, city, stateIn, zip])}),
+    }
+}
+
+export default connect(null, mapDispatchToProps)(AddAddress);
 
 const { width: WIDTH } = Dimensions.get('window');
 
