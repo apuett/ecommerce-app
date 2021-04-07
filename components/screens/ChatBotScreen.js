@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import ChatBot from 'react-native-chatbot-expo';
+import ChatBot from 'stonebro-react-native-chatbot';
 
 const steps = [
     {
@@ -60,7 +60,7 @@ class ChatBotScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <ChatBot steps={steps} footerStyle={styles.chatfooter} />
+                <ChatBot steps={steps} footerStyle={styles.chatfooter} placeholder={'Type the message...'} submitButtonContent={'Send'} />
             </View>
         )
     }
