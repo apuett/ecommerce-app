@@ -41,13 +41,25 @@ class CheckOut extends Component {
 
     handleCheckOutButtonPress(){
         if(this.state.addressValue != null && this.state.cardValue!=null ){
-            console.log('checkout')
+            Alert.alert('Purchased','Your items have been succesfully purchased!')
+            this.props.clearCart()
+            this.props.navigation.navigate('Menu');
+
         }else{
             Alert.alert('Required','Missing Address or Credit Card')
         }
     }
 
     render() {
+        let subTotal = 0;
+
+        for(let i = 0; i < this.props.cartItems.length; i++) {
+            subTotal += this.props.cartItems[i][3];
+        }
+
+        tax = subTotal * .02
+        totalPrice = subTotal + 4.99 + tax
+
         return (
             <View style={styles.container}>
                 <Text style={styles.headerText}>Credit Card:</Text>
@@ -100,11 +112,11 @@ class CheckOut extends Component {
                     <View style={styles.pricing_container}>
                         <View style={styles.pricing_field}>
                             <Text style={styles.pricing_field_name}>Subtotal</Text>
-                            <Text style={styles.price}>19.99</Text>
+                            <Text style={styles.price}>{subTotal.toFixed(2)}</Text>
                         </View>
                         <View style={styles.pricing_field}>
                             <Text style={styles.pricing_field_name}>Taxes</Text>
-                            <Text style={styles.price}>2.99</Text>
+                            <Text style={styles.price}>{tax.toFixed(2)}</Text>
                         </View>
                         <View style={styles.pricing_field}>
                             <Text style={styles.pricing_field_name}>Shipping</Text>
@@ -114,7 +126,7 @@ class CheckOut extends Component {
                     <View style={styles.total_pricing_field}>
                         <View style={styles.pricing_field}>
                             <Text style={styles.total_pricing_name}>Total</Text>
-                            <Text style={styles.total_price}>28.97</Text>
+                            <Text style={styles.total_price}>{totalPrice.toFixed(2)}</Text>
                         </View>
                     </View>
                 </View>
@@ -133,11 +145,18 @@ class CheckOut extends Component {
 const mapStateToProps = (state) => {
     return {
         creditCards: state.CreditCards,
-        addresses: state.Addresses
+        addresses: state.Addresses,
+        cartItems: state.ShoppingCart
     }
 }
 
-export default connect(mapStateToProps, null)(CheckOut);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        clearCart: () => dispatch({ type: 'CLEAR_CART' })
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CheckOut);
 
 const { width: WIDTH } = Dimensions.get('window');
 

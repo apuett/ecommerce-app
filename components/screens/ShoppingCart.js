@@ -22,6 +22,14 @@ class ShoppingCart extends React.Component {
         });
     }
 
+    handleCheckOutPress(){
+        if(this.props.cartItems.length > 0){
+            this.props.navigation.push('CheckOut')
+        }else{
+            Alert.alert('No items','No Items to Check Out')
+        }
+    }
+
     render() {
         let totalPrice = 0;
 
@@ -35,9 +43,7 @@ class ShoppingCart extends React.Component {
                     <View>
                         {this.renderProducts(this.props.cartItems)}
                         <Text style={styles.total_price}>Total: ${totalPrice}</Text>
-                        <Button title='Checkout' onPress={()=> { 
-                            this.props.navigation.push('CheckOut')
-                        }}></Button>
+                        <Button title='Checkout' onPress={()=>this.handleCheckOutPress()}></Button>
                     </View>
                 </ScrollView>
                 <NavBar navigation={this.props.navigation}></NavBar>
