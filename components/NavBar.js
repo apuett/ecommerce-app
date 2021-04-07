@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Button, View, Text } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { AntDesign } from '@expo/vector-icons/';
 
