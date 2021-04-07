@@ -9,6 +9,7 @@ import Product from './screens/Product';
 import ProductDetails from './screens/ProductDetails';
 import ShoppingCart from './screens/ShoppingCart';
 import WishList from './screens/WishList';
+import ChatBotScreen from './screens/ChatBotScreen';
 
 const AppStackNavigator = createStackNavigator({
     Login: Login,
@@ -19,7 +20,8 @@ const AppStackNavigator = createStackNavigator({
     WishList: WishList,
     CheckOut: CheckOut,
     AddCreditCard: AddCreditCard,
-    AddAddress: AddAddress
+    AddAddress: AddAddress,
+    ChatBotScreen: ChatBotScreen,
   });
 
   const Main = createAppContainer(AppStackNavigator);
