@@ -1,5 +1,8 @@
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from "react-navigation-stack";
+import CheckOut from './screens/CheckOut/CheckOut';
+import AddCreditCard from './screens/CheckOut/AddCreditCard';
+import AddAddress from './screens/CheckOut/AddAddress';
 import Login from './screens/Login';
 import Menu from './screens/Menu';
 import Product from './screens/Product';
@@ -15,6 +18,9 @@ const AppStackNavigator = createStackNavigator({
     ProductDetails: ProductDetails,
     ShoppingCart: ShoppingCart,
     WishList: WishList,
+    CheckOut: CheckOut,
+    AddCreditCard: AddCreditCard,
+    AddAddress: AddAddress,
     ChatBotScreen: ChatBotScreen,
   });
 
